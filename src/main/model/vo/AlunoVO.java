@@ -3,53 +3,62 @@ package model.vo;
 import java.time.LocalDate;
 
 public class AlunoVO extends PessoaVO {
+	private int id;
 	private String observacao;
 	private LocalDate dataMatricula;
 	private String matricula;
-	private ModalidadeVO modalidade;
-
-	public AlunoVO(String nome, String cpf, LocalDate nascimento, char sexo, String telefone, String celular,
-			String email, String bairro, String cidade, char estado, String cep) {
-		super(nome, cpf, nascimento, sexo, telefone, celular, email, bairro, cidade, estado, cep);
+	private TurmaVO turma;
+	
+	public AlunoVO() {
+		super();
 	}
 
-	public AlunoVO(String observacao, LocalDate dataMatricula, String matricula, ModalidadeVO modalidade) {
+	public AlunoVO(int id, String observacao, LocalDate dataMatricula, String matricula, TurmaVO turma) {
 		super();
-		this.observacao = observacao;
-		this.dataMatricula = dataMatricula;
-		this.matricula = matricula;
-		this.modalidade = modalidade;
+		this.id 			= id;
+		this.observacao 	= observacao;
+		this.dataMatricula 	= dataMatricula;
+		this.matricula 		= matricula;
+		this.turma 			= turma;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getObservacao() {
 		return observacao;
 	}
-	
+
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
-	
+
 	public LocalDate getDataMatricula() {
 		return dataMatricula;
 	}
-	
+
 	public void setDataMatricula(LocalDate dataMatricula) {
 		this.dataMatricula = dataMatricula;
 	}
-	
+
 	public String getMatricula() {
 		return matricula;
 	}
-	
+
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
 	}
-	
-	public ModalidadeVO getModalidade() {
-		return modalidade;
+
+	public TurmaVO getTurma() {
+		return turma;
 	}
-	
-	public void setModalidade(ModalidadeVO modalidade) {
-		this.modalidade = modalidade;
+
+	public void setTurma(TurmaVO turma) {
+		this.turma = turma;
 	}
 }
