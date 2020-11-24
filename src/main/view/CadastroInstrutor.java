@@ -98,12 +98,15 @@ public class CadastroInstrutor extends JFrame {
 		JLabel lblNewLabel_4 = new JLabel("Celular:");
 		lblNewLabel_4.setBounds(10, 163, 46, 14);
 		contentPane.add(lblNewLabel_4);
-		
-		textField_3 = new JTextField();
+		try {
+		MaskFormatter mascaraTelefone = new MaskFormatter("(##)####-####");//mascara TELEFONE 
+		JFormattedTextField textField_3 = new JFormattedTextField(mascaraTelefone);
 		textField_3.setBounds(122, 131, 99, 14);
 		contentPane.add(textField_3);
 		textField_3.setColumns(10);
-		
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		textField_4 = new JTextField();
 		textField_4.setBounds(122, 163, 99, 14);
 		contentPane.add(textField_4);
