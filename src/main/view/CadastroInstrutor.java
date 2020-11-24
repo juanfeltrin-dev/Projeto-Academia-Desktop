@@ -82,12 +82,15 @@ public class CadastroInstrutor extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("Data de Nascimento:");
 		lblNewLabel_2.setBounds(10, 74, 104, 14);
 		contentPane.add(lblNewLabel_2);
-		
-		textField_2 = new JTextField();
+		try {
+		MaskFormatter mascaraCpf = new MaskFormatter("###.###.###-##"); 
+		JFormattedTextField textField_2 = new JFormattedTextField(mascaraCpf);
 		textField_2.setBounds(122, 106, 99, 14);
 		contentPane.add(textField_2);
 		textField_2.setColumns(10);
-		
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		JLabel lblNewLabel_3 = new JLabel("Telefone:");
 		lblNewLabel_3.setBounds(10, 131, 46, 14);
 		contentPane.add(lblNewLabel_3);

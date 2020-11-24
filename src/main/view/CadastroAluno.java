@@ -13,6 +13,9 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CadastroAluno extends JFrame {
 
@@ -172,5 +175,17 @@ public class CadastroAluno extends JFrame {
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(380, 127, 109, 18);
 		contentPane.add(comboBox_1);
+		
+		JButton btnNewButton = new JButton("Limpar");
+		btnNewButton.setBounds(159, 482, 89, 23);
+		contentPane.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Cadastrar");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_1.setBounds(321, 482, 89, 23);
+		contentPane.add(btnNewButton_1);
 	}
 }
