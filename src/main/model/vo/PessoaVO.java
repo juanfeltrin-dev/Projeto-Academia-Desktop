@@ -3,7 +3,7 @@ package model.vo;
 import java.time.LocalDate;
 
 public class PessoaVO {
-	private int id;
+	private int pessoaId;
 	private String nome;
 	private String cpf;
 	private LocalDate nascimento;
@@ -20,10 +20,10 @@ public class PessoaVO {
 		super();
 	}
 	
-	public PessoaVO(int id, String nome, String cpf, LocalDate nascimento, char sexo, String telefone, String celular,
+	public PessoaVO(int pessoaId, String nome, String cpf, LocalDate nascimento, char sexo, String telefone, String celular,
 			String email, String bairro, String cidade, char estado, String cep) {
 		super();
-		this.id 		= id;
+		this.pessoaId 	= pessoaId;
 		this.nome 		= nome;
 		this.cpf 		= cpf;
 		this.nascimento = nascimento;
@@ -37,12 +37,12 @@ public class PessoaVO {
 		this.cep 		= cep;
 	}
 
-	public int getId() {
-		return id;
+	public int getPessoaId() {
+		return pessoaId;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
+	public void setPessoaId(int pessoaId) {
+		this.pessoaId = pessoaId;
 	}
 
 	public String getNome() {

@@ -83,5 +83,4 @@ public class TurmaVO {
 	public void setHorario(LocalTime horario) {
 		this.horario = horario;
 	}
-	
 }

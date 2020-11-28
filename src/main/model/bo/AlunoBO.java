@@ -1,29 +1,40 @@
 package model.bo;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import model.dao.AlunoDAO;
 import model.dao.PessoaDAO;
+import model.dao.TurmaDAO;
 import model.vo.AlunoVO;
+import model.vo.TurmaVO;
 
 public class AlunoBO {
-	private PessoaDAO pessoaDAO;
-	private AlunoDAO alunoDAO;
-	
-	public AlunoBO(PessoaDAO pessoaDAO, AlunoDAO alunoDAO) {
-		super();
-		this.pessoaDAO 	= pessoaDAO;
-		this.alunoDAO 	= alunoDAO;
-	}
+	private PessoaDAO pessoaDAO = new PessoaDAO();
+	private AlunoDAO alunoDAO 	= new AlunoDAO();
+	private TurmaDAO turmaDAO 	= new TurmaDAO();
 
-	public String excluir(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	//	a validar regra
+	public String excluir(int alunoId, int pessoaId) {
+		try {
+			this.alunoDAO.excluir(alunoId);
+			this.pessoaDAO.excluir(pessoaId);
+			
+			return "Aluno excluido com sucesso!";
+		} catch (Exception exception) {
+			return exception.getMessage();
+		}
 	}
 
 	public String alterar(AlunoVO aluno) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			this.pessoaDAO.alterar(aluno);
+			this.alunoDAO.alterar(aluno);
+			
+			return "Aluno alterado com sucesso!";
+		} catch (Exception exception) {
+			return exception.getMessage();
+		}
 	}
 
 	public String inserir(AlunoVO aluno) {
@@ -33,6 +44,8 @@ public class AlunoBO {
 			}
 			
 			int pessoaId = this.pessoaDAO.inserir(aluno);
+			
+			aluno.getTurma().setId(this.turmaDAO.buscarIdPeloNome(aluno.getTurma().getNome()));
 			this.alunoDAO.inserir(aluno, pessoaId);
 			
 			return "Aluno cadastrado com sucesso!";
@@ -43,14 +56,27 @@ public class AlunoBO {
 	
 	public String checkIn(AlunoVO aluno) {
 		try {
-			LocalTime horario 			= this.alunoDAO.obterHorarioTurma(aluno.getCpf());
-			LocalTime agora 			= LocalTime.now();
-			LocalTime meiaHoraDepois 	= agora.plusMinutes(30);
+			AlunoVO alunoLogado = this.alunoDAO.login(aluno.getCpf());
 			
-			if (horario.isAfter(agora) && horario.isBefore(meiaHoraDepois)) {
-				return "Liberado!";
+			if (this.alunoDAO.verificaSeTreinouHoje(alunoLogado.getId(), LocalDate.now())) {
+				throw new Exception("Você já treinou hoje!");
+			}
+			
+			if (alunoLogado.isLogado()) {
+				LocalTime agora 			= LocalTime.now();
+				LocalTime meiaHoraDepois 	= agora.plusMinutes(30);
+				LocalDate dataHoje			= LocalDate.now();
+				TurmaVO turmaVO 			= this.alunoDAO.obterHorarioTurma(aluno.getCpf(), dataHoje.getDayOfWeek().getValue());
+				
+				if (turmaVO.getHorario().isAfter(agora) && turmaVO.getHorario().isBefore(meiaHoraDepois)) {
+					this.alunoDAO.realizarCheckIn(alunoLogado.getId(), turmaVO.getId(), dataHoje, LocalTime.now());
+					
+					return "Liberado!";
+				} else {
+					throw new Exception("Você não está entre o horário da sua turma ou seu tempo permitido de atraso!");
+				}
 			} else {
-				throw new Exception("Você não está no horário da sua turma ou seu tempo de atraso!");
+				throw new Exception("Você não está cadastrado no sistema!");
 			}
 		} catch (Exception exception) {
 			return exception.getMessage();

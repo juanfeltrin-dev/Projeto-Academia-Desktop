@@ -3,6 +3,7 @@ package model.dao;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.vo.InstrutorVO;
@@ -32,5 +33,29 @@ public class InstrutorDAO {
 		}
 		
 		return resultado;
+	}
+	
+	public boolean alterar(InstrutorVO instrutor)
+	{
+		String sql 					= "UPDATE INSTRUTORES SET SALARIO = ? "
+									+ "WHERE ID_INSTRUTOR = ?";
+		Connection conn 			= Database.getConnection();
+		PreparedStatement prepStmt 	= Database.getPreparedStatement(conn, sql);		
+		boolean alterou 			= false;
+		
+		try {
+			prepStmt.setDouble(1, instrutor.getSalario());
+			
+			ResultSet rs 	= prepStmt.executeQuery();
+			alterou 		= rs.next();
+		} catch (SQLException exception) {
+			System.out.println("Erro ao executar a query de alteração do instrutor.\n");
+			System.out.println("Erro: " + exception.getMessage());
+		} finally {
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conn);
+		}
+		
+		return alterou;
 	}
 }
