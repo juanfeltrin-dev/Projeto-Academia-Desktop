@@ -13,7 +13,7 @@ public class PessoaVO {
 	private String email;
 	private String bairro;
 	private String cidade;
-	private char estado;
+	private String estado;
 	private String cep;
 		
 	public PessoaVO() {
@@ -21,7 +21,7 @@ public class PessoaVO {
 	}
 	
 	public PessoaVO(int pessoaId, String nome, String cpf, LocalDate nascimento, char sexo, String telefone, String celular,
-			String email, String bairro, String cidade, char estado, String cep) {
+			String email, String bairro, String cidade, String estado, String cep) {
 		super();
 		this.pessoaId 	= pessoaId;
 		this.nome 		= nome;
@@ -117,11 +117,11 @@ public class PessoaVO {
 		this.cidade = cidade;
 	}
 	
-	public char getEstado() {
+	public String getEstado() {
 		return estado;
 	}
 	
-	public void setEstado(char estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 	

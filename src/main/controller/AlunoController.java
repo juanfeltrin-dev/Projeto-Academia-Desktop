@@ -1,84 +1,89 @@
 package controller;
-import java.time.LocalDate	;
-import java.time.format.DateTimeFormatter;
 import model.vo.AlunoVO;
-import model.vo.TurmaVO;
 import model.bo.AlunoBO;
 
 public class AlunoController extends PessoaController{
-	DateTimeFormatter dataFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	AlunoBO bo = new AlunoBO();
 
-	public String inserir(String cpf, String nome, String dataNascimento, String sexo, String telefone,
-			String celular, String endereco, String bairro, String cidade, Object object, String cep, String email,int id,String observacoes, LocalDate data_matricula, String matricula, TurmaVO id_turma){
-		AlunoVO aluno = new AlunoVO(id,observacoes, data_matricula, matricula, id_turma);
-		String mensagem = validarCampos(id, observacoes, data_matricula, matricula, id_turma);
-
-		if(mensagem == "") {
-			mensagem = bo.salvar(criarNovoAluno(observacoes, data_matricula, matricula, id_turma));			
+	public String inserir(AlunoVO aluno){
+		try {
+			validarCampos(aluno);
+			
+			return bo.inserir(aluno);
+		} catch(Exception exception) {
+			return exception.getMessage();
 		}
-
-
-		return mensagem;
 	}
 
 
-	private static String validarCampos(int id,String observacoes, LocalDate data_matricula, String matricula,
-			TurmaVO id_turma) {
-		// TODO Auto-generated method stub
-		return null;
+	private static void validarCampos(AlunoVO aluno) throws Exception {
+		try {
+			if (aluno.getNome().isEmpty()) {
+				throw new Exception("Nome não pode ser vazio");
+			}
+			
+			if (aluno.getCpf().isEmpty()) {
+				throw new Exception("CPF não pode ser vazio");
+			}
+			
+			if (aluno.getNascimento().toString().isEmpty()) {
+				throw new Exception("Nascimento não pode ser vazio");
+			}
+			
+			if (aluno.getSexo() != 'M' && aluno.getSexo() != 'F') {
+				throw new Exception("Sexo não pode ser vazio");
+			}
+			
+			if (aluno.getEmail().isEmpty()) {
+				throw new Exception("Email não pode ser vazio");
+			}
+			
+			if (aluno.getBairro().isEmpty()) {
+				throw new Exception("Bairro não pode ser vazio");
+			}
+			
+			if (aluno.getCidade().isEmpty()) {
+				throw new Exception("Bairro não pode ser vazio");
+			}
+			
+			if (aluno.getEstado().isEmpty()) {
+				throw new Exception("Estado não pode ser vazio");
+			}
+			
+			if (aluno.getCep().isEmpty()) {
+				throw new Exception("CEP não pode ser vazio");
+			}
+			
+			if (aluno.getDataMatricula().toString().isEmpty()) {
+				throw new Exception("Nascimento não pode ser vazio");
+			}
+		} catch (Exception exception) {
+			System.out.println(exception.getMessage());
+		}
 	}
 
-
-	public String excluir(String idSelecionado) {
-
-		String mensagem = "";
-		int id = 0;
+	public String excluir(String alunoId, String pesssoaId) {
+		int aluno 		= 0;
+		int pessoa 		= 0;
 
 		try {
-
-			id = Integer.parseInt(idSelecionado);
-
+			aluno 			= Integer.parseInt(alunoId);
+			pessoa 			= Integer.parseInt(pesssoaId);
+			
+			return bo.excluir(aluno, pessoa);
 		} catch (NumberFormatException e) {
-			mensagem = "Insira um número inteiro";
-		}
-
-		if (mensagem == "") {
-			mensagem = bo.excluir(id);
-		}
-
-		return mensagem;		
-	}
-	
-	private AlunoVO criarNovoAluno(int id, String cpf, String nome, String dataNascimento, String sexo, String telefone,
-			String celular, String endereco, String bairro, String cidade, String uf, String cep, String email, String modalidade,
-			String observacoes, LocalDate data_matricula, String matricula, TurmaVO id_turma) {
-		
-		ModalidadeController controller = new ModalidadeController();
-		LocalDate dtNasc = LocalDate.parse(dataNascimento, dataFormatter);
-		
-		AlunoVO vo = new AlunoVO(removerMascara(cpf), nome, dtNasc, sexo, removerMascara(telefone), removerMascara(celular), email, bairro,
-				endereco, removerMascara(cep), cidade, uf, controller.consultarPorNome(modalidade),
-				observacoes, LocalDate.now(), true);
-		
-		return vo;
+			return "Insira um número inteiro";
+		}	
 	}
 
-	public String alterar(int id, String cpf, String nome, String dataNascimento, String sexo, String telefone,
-			String celular, String endereco, String bairro, String cidade, String uf, String cep, String email, String modalidade,
-			String observacoes, LocalDate data_matricula, String matricula, TurmaVO id_turma) {
-
-		String mensagem = validarCampos(cpf, nome, dataNascimento, sexo, telefone, celular, 
-				endereco, bairro, cidade, uf, cep, email);
-
-		if(mensagem == "") {
-			AlunoVO aluno = criarNovoAluno(id,cpf,nome,dataNascimento,sexo,telefone,celular,endereco,bairro,cidade,uf,cep,email,modalidade
-				,observacoes,data_matricula, matricula, id_turma);
-			aluno.setId(id);
-			mensagem = bo.alterar(aluno);			
+	public String alterar(AlunoVO aluno) {
+		try {
+			validarCampos(aluno);
+			
+			return bo.alterar(aluno);
+		} catch (Exception exception) {
+			return exception.getMessage();
 		}
-
-		return mensagem;
 
 	}
 }
