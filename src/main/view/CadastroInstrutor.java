@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.text.ParseException;
@@ -10,6 +11,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
+
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.github.lgooddatepicker.components.DateTimePicker;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -22,17 +28,17 @@ import java.awt.event.ActionEvent;
 
 public class CadastroInstrutor extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	
 	private JTextField textField_6;
 	private JTextField textField_7;
 	private JTextField textField_8;
-	private JTextField textField_9;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -55,7 +61,7 @@ public class CadastroInstrutor extends JFrame {
 	public CadastroInstrutor() {
 		setTitle("Cadastro de Instrutor");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 588, 571);
+		setBounds(100, 100, 724, 571);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -66,7 +72,7 @@ public class CadastroInstrutor extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		textField = new JTextField();
-		textField.setBounds(122, 45, 99, 14);
+		textField.setBounds(122, 45, 255, 14);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
@@ -74,16 +80,11 @@ public class CadastroInstrutor extends JFrame {
 		lblNewLabel_1.setBounds(10, 106, 24, 14);
 		contentPane.add(lblNewLabel_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(122, 74, 99, 14);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
 		
-		JLabel lblNewLabel_2 = new JLabel("Data de Nascimento:");
-		lblNewLabel_2.setBounds(10, 74, 104, 14);
-		contentPane.add(lblNewLabel_2);
+		
+
 		try {
-		MaskFormatter mascaraCpf = new MaskFormatter("###.###.###-##"); 
+		MaskFormatter mascaraCpf = new MaskFormatter("###.###.###-##");  //mascara de cpf
 		JFormattedTextField textField_2 = new JFormattedTextField(mascaraCpf);
 		textField_2.setBounds(122, 106, 99, 14);
 		contentPane.add(textField_2);
@@ -107,10 +108,17 @@ public class CadastroInstrutor extends JFrame {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		textField_4 = new JTextField();
-		textField_4.setBounds(122, 163, 99, 14);
-		contentPane.add(textField_4);
-		textField_4.setColumns(10);
+		
+		try {
+			MaskFormatter mascaraCelular = new MaskFormatter("(##)#####-####");//mascara celular 
+			JFormattedTextField textField_4 = new JFormattedTextField(mascaraCelular);
+			textField_4.setBounds(122, 163, 99, 14);
+			contentPane.add(textField_4);
+			textField_4.setColumns(10);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 		
 		JLabel lblNewLabel_5 = new JLabel("CEP:");
 		lblNewLabel_5.setBounds(10, 190, 46, 14);
@@ -125,8 +133,17 @@ public class CadastroInstrutor extends JFrame {
 			e.printStackTrace();
 		}
 		
+		JLabel lblData = new JLabel("Data:");
+		lblData.setBounds(10, 64, 40, 20);
+		getContentPane().add(lblData);
+
+		DatePickerSettings dateSettings = new DatePickerSettings();
+		dateSettings.setAllowKeyboardEditing(false);
 		
-		
+		final DatePicker date = new DatePicker(dateSettings);
+		date.setBounds(113, 70, 170, 19);
+		getContentPane().add(date);
+	
 		JLabel lblNewLabel_6 = new JLabel("Endere\u00E7o:");
 		lblNewLabel_6.setBounds(10, 215, 49, 14);
 		contentPane.add(lblNewLabel_6);
@@ -172,15 +189,15 @@ public class CadastroInstrutor extends JFrame {
 		contentPane.add(comboBox);
 		
 		JLabel lblNewLabel_11 = new JLabel("Sexo:");
-		lblNewLabel_11.setBounds(312, 45, 46, 14);
+		lblNewLabel_11.setBounds(313, 74, 46, 14);
 		contentPane.add(lblNewLabel_11);
 		
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Masculino");
-		rdbtnNewRadioButton.setBounds(301, 70, 77, 23);
+		rdbtnNewRadioButton.setBounds(312, 97, 77, 23);
 		contentPane.add(rdbtnNewRadioButton);
 		
 		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Femino");
-		rdbtnNewRadioButton_1.setBounds(380, 70, 109, 23);
+		rdbtnNewRadioButton_1.setBounds(410, 102, 109, 23);
 		contentPane.add(rdbtnNewRadioButton_1);
 		
 		JLabel lblNewLabel_12 = new JLabel("Salario:");
@@ -189,7 +206,7 @@ public class CadastroInstrutor extends JFrame {
 		
 		
 		try {
-			MaskFormatter	mascaraReal= new MaskFormatter("#.###,##");
+			MaskFormatter	mascaraReal= new MaskFormatter("#.###,##");  // mascara de salario
 			JFormattedTextField textField_9 = new JFormattedTextField(mascaraReal);
 			textField_9.setBounds(357, 131, 67, 14);
 			contentPane.add(textField_9);

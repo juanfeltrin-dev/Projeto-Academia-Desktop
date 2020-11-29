@@ -8,13 +8,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.awt.event.ActionEvent;
 
 public class CadastroAluno extends JFrame {
@@ -63,7 +66,7 @@ public class CadastroAluno extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		textField = new JTextField();
-		textField.setBounds(122, 45, 99, 14);
+		textField.setBounds(122, 45, 280, 14);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
@@ -71,19 +74,29 @@ public class CadastroAluno extends JFrame {
 		lblNewLabel_1.setBounds(10, 106, 24, 14);
 		contentPane.add(lblNewLabel_1);
 		
-		textField_1 = new JTextField();
+		try {
+		MaskFormatter mascaradata = new MaskFormatter("##/##/####");//mascara DATA 
+		JFormattedTextField textField_1 = new JFormattedTextField(mascaradata);
 		textField_1.setBounds(122, 74, 99, 14);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		
 		JLabel lblNewLabel_2 = new JLabel("Data de Nascimento:");
 		lblNewLabel_2.setBounds(10, 74, 104, 14);
 		contentPane.add(lblNewLabel_2);
 		
-		textField_2 = new JTextField();
+		try {
+		MaskFormatter mascaraCpf = new MaskFormatter("###.###.###-##");  //mascara de cpf
+		JFormattedTextField textField_2 = new JFormattedTextField(mascaraCpf);
 		textField_2.setBounds(122, 106, 99, 14);
 		contentPane.add(textField_2);
 		textField_2.setColumns(10);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		
 		JLabel lblNewLabel_3 = new JLabel("Telefone:");
 		lblNewLabel_3.setBounds(10, 131, 46, 14);
@@ -93,15 +106,25 @@ public class CadastroAluno extends JFrame {
 		lblNewLabel_4.setBounds(10, 163, 46, 14);
 		contentPane.add(lblNewLabel_4);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(122, 131, 99, 14);
-		contentPane.add(textField_3);
-		textField_3.setColumns(10);
-		
-		textField_4 = new JTextField();
-		textField_4.setBounds(122, 163, 99, 14);
-		contentPane.add(textField_4);
-		textField_4.setColumns(10);
+		try {
+			MaskFormatter mascaraTelefone = new MaskFormatter("(##)####-####");//mascara TELEFONE 
+			JFormattedTextField textField_3 = new JFormattedTextField(mascaraTelefone);
+			textField_3.setBounds(122, 131, 99, 14);
+			contentPane.add(textField_3);
+			textField_3.setColumns(10);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			try {
+				MaskFormatter mascaraCelular = new MaskFormatter("(##)#####-####");//mascara celular 
+				JFormattedTextField textField_4 = new JFormattedTextField(mascaraCelular);
+				textField_4.setBounds(122, 163, 99, 14);
+				contentPane.add(textField_4);
+				textField_4.setColumns(10);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 		
 		JLabel lblNewLabel_5 = new JLabel("CEP:");
 		lblNewLabel_5.setBounds(10, 190, 46, 14);
@@ -157,23 +180,23 @@ public class CadastroAluno extends JFrame {
 		contentPane.add(comboBox);
 		
 		JLabel lblNewLabel_11 = new JLabel("Sexo:");
-		lblNewLabel_11.setBounds(312, 45, 46, 14);
+		lblNewLabel_11.setBounds(317, 91, 46, 14);
 		contentPane.add(lblNewLabel_11);
 		
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Masculino");
-		rdbtnNewRadioButton.setBounds(301, 70, 77, 23);
+		rdbtnNewRadioButton.setBounds(312, 102, 77, 23);
 		contentPane.add(rdbtnNewRadioButton);
 		
 		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Femino");
-		rdbtnNewRadioButton_1.setBounds(380, 70, 109, 23);
+		rdbtnNewRadioButton_1.setBounds(397, 102, 109, 23);
 		contentPane.add(rdbtnNewRadioButton_1);
 		
 		JLabel lblNewLabel_12 = new JLabel("Modalidade:");
-		lblNewLabel_12.setBounds(312, 131, 67, 14);
+		lblNewLabel_12.setBounds(312, 145, 67, 14);
 		contentPane.add(lblNewLabel_12);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(380, 127, 109, 18);
+		comboBox_1.setBounds(378, 143, 109, 18);
 		contentPane.add(comboBox_1);
 		
 		JButton btnNewButton = new JButton("Limpar");
