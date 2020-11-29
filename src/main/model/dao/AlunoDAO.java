@@ -6,8 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import model.vo.AlunoVO;
@@ -42,7 +41,58 @@ public class AlunoDAO {
 		return resultado;
 	}
 	
-	public boolean login(String cpf)
+	public boolean alterar(AlunoVO aluno)
+	{
+		String sql 					= "UPDATE ALUNOS SET OBSERVACOES = ?, DATA_MATRICULA = ?, MATRICULA = ?, ID_TURMA = ? "
+									+ "WHERE ID_ALUNO = ?";
+		Connection conn 			= Database.getConnection();
+		PreparedStatement prepStmt 	= Database.getPreparedStatement(conn, sql);		
+		boolean alterou 			= false;
+		
+		try {
+			prepStmt.setString(1, aluno.getObservacao());
+			Date matricula = java.sql.Date.valueOf(aluno.getDataMatricula());
+			prepStmt.setDate(2, matricula);
+			prepStmt.setString(3, aluno.getMatricula());
+			prepStmt.setInt(4, aluno.getTurma().getId());
+			
+			ResultSet rs 	= prepStmt.executeQuery();
+			alterou 		= rs.next();
+		} catch (SQLException exception) {
+			System.out.println("Erro ao executar a query de alteração do aluno.\n");
+			System.out.println("Erro: " + exception.getMessage());
+		} finally {
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conn);
+		}
+		
+		return alterou;
+	}
+	
+	public boolean excluir(int id)
+	{
+		String sql 					= "DELETE FROM ALUNOS WHERE ID_ALUNO = ?";
+		Connection conn 			= Database.getConnection();
+		PreparedStatement prepStmt 	= Database.getPreparedStatement(conn, sql);		
+		boolean excluiu 			= false;
+		
+		try {
+			prepStmt.setInt(1, id);
+			
+			ResultSet rs 	= prepStmt.executeQuery();
+			excluiu 		= rs.next();
+		} catch (SQLException exception) {
+			System.out.println("Erro ao executar a query de exclusão do aluno.\n");
+			System.out.println("Erro: " + exception.getMessage());
+		} finally {
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conn);
+		}
+		
+		return excluiu;
+	}
+	
+	public AlunoVO login(String cpf)
 	{
 		String sql = "SELECT ALUNOS.ID_ALUNO FROM PESSOAS "
 				+ "INNER JOIN ALUNOS ON ALUNOS.ID_PESSOA = PESSOAS.ID_PESSOA "
@@ -51,9 +101,111 @@ public class AlunoDAO {
 		Connection conexao 			= Database.getConnection();
 		PreparedStatement prepStmt 	= Database.getPreparedStatement(conexao, sql);
 		ResultSet resultado			= null;
+		AlunoVO alunoVO				= new AlunoVO();
 		
 		try {
 			prepStmt.setString(1, cpf);
+
+			resultado = prepStmt.executeQuery();
+
+			if(resultado.next()) {
+				alunoVO.setId(resultado.getInt(1));
+				alunoVO.setLogado(true);
+			}
+		} catch (SQLException exception) {
+			System.out.println("Erro ao executar a query que verifica existência de aluno por CPF.\n");
+			System.out.println("Erro: " + exception.getMessage());
+		} finally {
+			Database.closeResultSet(resultado);
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conexao);
+		}
+		
+		return alunoVO;
+	}
+	
+	public TurmaVO obterHorarioTurma(String cpf, int diaDaSemana)
+	{
+		String sql = "SELECT TURMAS.id_turma, DIA_SEMANA_TURMAS.HORA FROM ALUNOS "
+				+ "INNER JOIN PESSOAS ON ALUNOS.ID_PESSOA = PESSOAS.ID_PESSOA "
+				+ "INNER JOIN TURMAS ON ALUNOS.ID_TURMA = TURMAS.ID_TURMA "
+				+ "INNER JOIN DIA_SEMANA_TURMAS ON TURMAS.ID_TURMA = DIA_SEMANA_TURMAS.ID_TURMA "
+				+ "INNER JOIN DIAS_SEMANA ON DIA_SEMANA_TURMAS.ID_DIA_SEMANA = DIAS_SEMANA.ID_DIA_SEMANA "
+				+ "WHERE PESSOAS.CPF = ? AND "
+				+ "DIAS_SEMANA.ID_DIA_SEMANA = ?";
+		Connection conexao 			= Database.getConnection();
+		PreparedStatement prepStmt 	= Database.getPreparedStatement(conexao, sql);
+		ResultSet resultado			= null;
+		TurmaVO turmaVO 			= new TurmaVO();
+		LocalTime horario			= null;
+		
+		try {
+			prepStmt.setString(1, cpf);
+			prepStmt.setInt(2, diaDaSemana);
+			
+			resultado = prepStmt.executeQuery();
+			
+			if (resultado.next()) {				
+				turmaVO.setId(resultado.getInt(1));
+				
+				Time horarioSQL = resultado.getTime(2);
+				horario 		= horarioSQL.toLocalTime();
+				turmaVO.setHorario(horario);
+			}
+		} catch (SQLException exception) {
+			System.out.println("Erro ao executar a query que obtem horário da turma do aluno pelo CPF.\n");
+			System.out.println("Erro: " + exception.getMessage());
+		} finally {
+			Database.closeResultSet(resultado);
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conexao);
+		}
+		
+		return turmaVO;
+	}
+	
+	public void realizarCheckIn(int alunoId, int turmaId, LocalDate data, LocalTime hora)
+	{
+		String sql 					= "INSERT INTO CHECK_IN(ID_ALUNO, ID_TURMA, DATA, HORA) VALUES(?, ?, ?, ?)";
+		Connection conexao 			= Database.getConnection();
+		PreparedStatement prepStmt 	= Database.getPreparedStatement(conexao, sql);
+		ResultSet resultado			= null;
+		
+		try {
+			Date dataCheckIn = java.sql.Date.valueOf(data);
+			Time horaCheckIn = java.sql.Time.valueOf(hora);			
+			
+			prepStmt.setInt(1, alunoId);
+			prepStmt.setInt(2, turmaId);
+			prepStmt.setDate(3, dataCheckIn);
+			prepStmt.setTime(4, horaCheckIn);
+			
+			resultado = prepStmt.executeQuery();			
+		} catch (SQLException exception) {
+			System.out.println("Erro ao executar a query que realiza o check-in do aluno.\n");
+			System.out.println("Erro: " + exception.getMessage());
+		} finally {
+			Database.closeResultSet(resultado);
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conexao);
+		}
+	}
+	
+	public boolean verificaSeTreinouHoje(int alunoId, LocalDate data)
+	{
+		String sql = "SELECT ALUNOS.ID_ALUNO FROM ALUNOS "
+				+ "INNER JOIN CHECK_IN ON ALUNOS.ID_ALUNO = CHECK_IN.ID_ALUNO "
+				+ "WHERE ALUNOS.ID_ALUNO = ? AND "
+				+ "CHECK_IN.DATA = ?";
+
+		Connection conexao 			= Database.getConnection();
+		PreparedStatement prepStmt 	= Database.getPreparedStatement(conexao, sql);
+		ResultSet resultado			= null;
+		
+		try {
+			prepStmt.setInt(1, alunoId);
+			Date dataCheckIn = java.sql.Date.valueOf(data);
+			prepStmt.setDate(2, dataCheckIn);
 
 			resultado = prepStmt.executeQuery();
 
@@ -70,60 +222,5 @@ public class AlunoDAO {
 		}
 		
 		return false;
-	}
-	
-	public LocalTime obterHorarioTurma(String cpf)
-	{
-		String sql = "SELECT TURMAS.HORARIO FROM ALUNOS "
-				+ "INNER JOIN PESSOAS ON ALUNOS.ID_PESSOA = PESSOAS.ID_PESSOA "
-				+ "INNER JOIN TURMAS ON ALUNOS.ID_TURMA = TURMAS.ID_TURMA "
-				+ "WHERE PESSOAS.CPF = ?";
-		Connection conexao 			= Database.getConnection();
-		PreparedStatement prepStmt 	= Database.getPreparedStatement(conexao, sql);
-		ResultSet resultado			= null;
-		LocalTime horario			= null;
-		
-		try {
-			prepStmt.setString(1, cpf);
-			resultado = prepStmt.executeQuery();
-			
-			if (resultado.next()) {
-				Time horarioSQL = resultado.getTime(1);
-				horario 		= horarioSQL.toLocalTime();
-			}
-		} catch (SQLException exception) {
-			System.out.println("Erro ao executar a query que obtem horário da turma do aluno pelo CPF.\n");
-			System.out.println("Erro: " + exception.getMessage());
-		} finally {
-			Database.closeResultSet(resultado);
-			Database.closePreparedStatement(prepStmt);
-			Database.closeConnection(conexao);
-		}
-		
-		return horario;
-	}
-	
-	public void realizarCheckIn(int alunoId, int turmaId, LocalDateTime horario)
-	{
-		String sql 					= "INSERT INTO CHECK_IN(ID_ALUNO, ID_TURMA, HORARIO) VALUES(?, ?, ?)";
-		Connection conexao 			= Database.getConnection();
-		PreparedStatement prepStmt 	= Database.getPreparedStatement(conexao, sql);
-		ResultSet resultado			= null;
-		
-		try {
-			prepStmt.setInt(1, alunoId);
-			prepStmt.setInt(2, turmaId);
-			Timestamp  horarioChegada = Timestamp.valueOf(horario);
-			prepStmt.setTimestamp(3, horarioChegada);
-			resultado = prepStmt.executeQuery();
-			
-		} catch (SQLException exception) {
-			System.out.println("Erro ao executar a query que realizar o check-in do aluno.\n");
-			System.out.println("Erro: " + exception.getMessage());
-		} finally {
-			Database.closeResultSet(resultado);
-			Database.closePreparedStatement(prepStmt);
-			Database.closeConnection(conexao);
-		}
 	}
 }
