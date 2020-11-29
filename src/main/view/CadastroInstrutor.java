@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.text.ParseException;
@@ -14,7 +15,6 @@ import javax.swing.text.MaskFormatter;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
-import com.github.lgooddatepicker.components.DateTimePicker;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -141,7 +141,7 @@ public class CadastroInstrutor extends JFrame {
 		dateSettings.setAllowKeyboardEditing(false);
 		
 		final DatePicker date = new DatePicker(dateSettings);
-		date.setBounds(113, 70, 170, 19);
+		date.setBounds(113, 70, 100, 19);
 		getContentPane().add(date);
 	
 		JLabel lblNewLabel_6 = new JLabel("Endere\u00E7o:");
@@ -189,26 +189,26 @@ public class CadastroInstrutor extends JFrame {
 		contentPane.add(comboBox);
 		
 		JLabel lblNewLabel_11 = new JLabel("Sexo:");
-		lblNewLabel_11.setBounds(313, 74, 46, 14);
+		lblNewLabel_11.setBounds(331, 81, 46, 14);
 		contentPane.add(lblNewLabel_11);
 		
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Masculino");
-		rdbtnNewRadioButton.setBounds(312, 97, 77, 23);
+		rdbtnNewRadioButton.setBounds(331, 102, 77, 23);
 		contentPane.add(rdbtnNewRadioButton);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Femino");
+		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Feminino");
 		rdbtnNewRadioButton_1.setBounds(410, 102, 109, 23);
 		contentPane.add(rdbtnNewRadioButton_1);
 		
 		JLabel lblNewLabel_12 = new JLabel("Salario:");
-		lblNewLabel_12.setBounds(312, 131, 36, 14);
+		lblNewLabel_12.setBounds(330, 146, 36, 14);
 		contentPane.add(lblNewLabel_12);
 		
 		
 		try {
 			MaskFormatter	mascaraReal= new MaskFormatter("#.###,##");  // mascara de salario
 			JFormattedTextField textField_9 = new JFormattedTextField(mascaraReal);
-			textField_9.setBounds(357, 131, 67, 14);
+			textField_9.setBounds(376, 146, 67, 14);
 			contentPane.add(textField_9);
 			textField_9.setColumns(10);
 			
