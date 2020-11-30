@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import model.vo.ModalidadeVO;
 
 public class ModalidadeDAO {
-	public boolean inserir(ModalidadeVO modalidade)
+	public boolean inserir(ModalidadeVO modalidade) throws Exception
 	{
-		String sql 					= "INSERT INTO MODALIDADES VALUES(?)";
+		String sql 					= "INSERT INTO MODALIDADES(NOME) VALUES(?)";
 		Connection conexao 			= Database.getConnection();
 		PreparedStatement prepStmt 	= Database.getPreparedStatement(conexao, sql);
 		

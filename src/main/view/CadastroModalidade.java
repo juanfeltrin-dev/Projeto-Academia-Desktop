@@ -1,19 +1,31 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.ModalidadeController;
+import model.vo.ModalidadeVO;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
 public class CadastroModalidade extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
+	private ModalidadeVO modalidadeVO = new ModalidadeVO();
+	private ModalidadeController modalidadeController = new ModalidadeController();
 
 	/**
 	 * Launch the application.
@@ -55,5 +67,19 @@ public class CadastroModalidade extends JFrame {
 		JButton btnNewButton = new JButton("Cadastrar Modalidade");
 		btnNewButton.setBounds(129, 198, 138, 23);
 		contentPane.add(btnNewButton);
+		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					modalidadeVO.setNome(textField.getText());
+					
+					String msg = modalidadeController.inserir(modalidadeVO);
+					
+					JOptionPane.showMessageDialog(contentPane, msg);
+				} catch (Exception exception) {
+					JOptionPane.showMessageDialog(contentPane, exception.getMessage());
+				}
+			}
+		});
 	}
 }
