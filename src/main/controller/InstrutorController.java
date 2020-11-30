@@ -18,6 +18,7 @@ import model.vo.AlunoVO;
 				return bo.inserir(aluno);
 			} catch(Exception exception) {
 				return exception.getMessage();
+				
 			}
 		}
 }
