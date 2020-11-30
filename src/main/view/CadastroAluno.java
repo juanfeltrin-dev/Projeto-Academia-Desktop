@@ -31,9 +31,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
-public class CadastroAluno extends JFrame {
+public class CadastroAluno extends JPanel {
 
-	private JPanel contentPane;
+
 	private JTextField txtEmail;
 	private JTextField textField_5;
 	private JTextField txtEndereco;
@@ -65,144 +65,141 @@ public class CadastroAluno extends JFrame {
 	 */
 	public CadastroAluno() {
 		try {
-			setBackground(Color.GRAY);
-			setTitle("Cadastro de Alunos");
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			
+			
 			setBounds(100, 100, 708, 571);
-			contentPane = new JPanel();
-			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-			setContentPane(contentPane);
-			contentPane.setLayout(null);
+			setBorder(new EmptyBorder(5, 5, 5, 5));
+			setLayout(null);
 			
 			JLabel lblNewLabel = new JLabel("Email:");
 			lblNewLabel.setBounds(10, 59, 83, 22);
-			contentPane.add(lblNewLabel);
+			add(lblNewLabel);
 			
 			txtEmail = new JTextField();
 			txtEmail.setBounds(113, 61, 280, 18);
-			contentPane.add(txtEmail);
+			add(txtEmail);
 			txtEmail.setColumns(10);
 			
 			JLabel lblNewLabel_1 = new JLabel("CPF:");
 			lblNewLabel_1.setBounds(10, 92, 46, 14);
-			contentPane.add(lblNewLabel_1);
+			add(lblNewLabel_1);
 			
 			DatePickerSettings dateSettings = new DatePickerSettings();
 			dateSettings.setAllowKeyboardEditing(false);
 			
 			final DateTimePicker txtNascimento = new DateTimePicker(dateSettings, null);
 			txtNascimento.setBounds(451, 116, 180, 40);
-			getContentPane().add(txtNascimento);
+			add(txtNascimento);
 			
 			JLabel lblNewLabel_2 = new JLabel("Data de Nascimento:");
 			lblNewLabel_2.setBounds(312, 116, 129, 14);
-			contentPane.add(lblNewLabel_2);
+			add(lblNewLabel_2);
 			
 			MaskFormatter mascaraCpf = new MaskFormatter("###.###.###-##");  //mascara de cpf
 			final JFormattedTextField txtCpf = new JFormattedTextField(mascaraCpf);
 			txtCpf.setBounds(113, 90, 67, 18);
-			contentPane.add(txtCpf);
+			add(txtCpf);
 			txtCpf.setColumns(10);
 			
 			JLabel lblNewLabel_3 = new JLabel("Telefone:");
 			lblNewLabel_3.setBounds(10, 128, 67, 14);
-			contentPane.add(lblNewLabel_3);
+			add(lblNewLabel_3);
 			
 			JLabel lblNewLabel_4 = new JLabel("Celular:");
 			lblNewLabel_4.setBounds(10, 153, 67, 14);
-			contentPane.add(lblNewLabel_4);
+			add(lblNewLabel_4);
 			
 			MaskFormatter mascaraTelefone = new MaskFormatter("(##)####-####");//mascara TELEFONE 
 			final JFormattedTextField txtTelefone = new JFormattedTextField(mascaraTelefone);
 			txtTelefone.setBounds(113, 122, 99, 18);
-			contentPane.add(txtTelefone);
+			add(txtTelefone);
 			txtTelefone.setColumns(10);
 				
 			MaskFormatter mascaraCelular = new MaskFormatter("(##)#####-####");//mascara celular 
 			final JFormattedTextField txtCelular = new JFormattedTextField(mascaraCelular);
 			txtCelular.setBounds(113, 151, 99, 18);
-			contentPane.add(txtCelular);
+			add(txtCelular);
 			txtCelular.setColumns(10);
 			
 			JLabel lblNewLabel_5 = new JLabel("CEP:");
 			lblNewLabel_5.setBounds(10, 182, 46, 14);
-			contentPane.add(lblNewLabel_5);
+			add(lblNewLabel_5);
 			
 			MaskFormatter mascaraCep = new MaskFormatter("#####-###");//mascara CEP 
 			final JFormattedTextField txtCep = new JFormattedTextField(mascaraCep);
 			txtCep.setBounds(113, 180, 99, 18);
-			contentPane.add(txtCep);
+			add(txtCep);
 			txtCep.setColumns(10);
 			
 			JLabel lblNewLabel_6 = new JLabel("Endere\u00E7o:");
 			lblNewLabel_6.setBounds(7, 211, 70, 14);
-			contentPane.add(lblNewLabel_6);
+			add(lblNewLabel_6);
 			
 			txtEndereco = new JTextField();
 			txtEndereco.setBounds(113, 209, 189, 18);
-			contentPane.add(txtEndereco);
+			add(txtEndereco);
 			txtEndereco.setColumns(10);
 			
 			JLabel lblNewLabel_7 = new JLabel("Bairro:");
 			lblNewLabel_7.setBounds(10, 240, 67, 14);
-			contentPane.add(lblNewLabel_7);
+			add(lblNewLabel_7);
 			
 			txtBairro = new JTextField();
 			txtBairro.setBounds(113, 238, 189, 18);
-			contentPane.add(txtBairro);
+			add(txtBairro);
 			txtBairro.setColumns(10);
 			
 			JLabel lblNewLabel_8 = new JLabel("Cidade:");
 			lblNewLabel_8.setBounds(10, 269, 67, 14);
-			contentPane.add(lblNewLabel_8);
+			add(lblNewLabel_8);
 			
 			txtCidade = new JTextField();
 			txtCidade.setBounds(113, 267, 189, 18);
-			contentPane.add(txtCidade);
+			add(txtCidade);
 			txtCidade.setColumns(10);
 			
 			JLabel lblNewLabel_9 = new JLabel("UF:");
 			lblNewLabel_9.setBounds(10, 298, 46, 14);
-			contentPane.add(lblNewLabel_9);
+			add(lblNewLabel_9);
 			
 			JLabel lblNewLabel_10 = new JLabel("Observac\u00F5es:");
 			lblNewLabel_10.setBounds(10, 325, 83, 14);
-			contentPane.add(lblNewLabel_10);
+			add(lblNewLabel_10);
 			
 			final JTextPane txtObservacoes = new JTextPane();
 			txtObservacoes.setBorder(new LineBorder(Color.LIGHT_GRAY));
 			txtObservacoes.setBounds(113, 325, 195, 105);
-			contentPane.add(txtObservacoes);
+			add(txtObservacoes);
 	
 			ArrayList<String> estados = this.mockEstados();
 			final JComboBox cbEstado = new JComboBox(estados.toArray());
 			cbEstado.setBounds(113, 296, 99, 18);
-			contentPane.add(cbEstado);
+			add(cbEstado);
 			
 			JLabel lblNewLabel_11 = new JLabel("Sexo:");
 			lblNewLabel_11.setBounds(312, 90, 46, 14);
-			contentPane.add(lblNewLabel_11);
+			add(lblNewLabel_11);
 			
 			final JRadioButton btnMasculino = new JRadioButton("Masculino");
 			btnMasculino.setBounds(451, 83, 94, 23);
-			contentPane.add(btnMasculino);
+			add(btnMasculino);
 			
 			JRadioButton btnFeminino = new JRadioButton("Feminino");
 			btnFeminino.setBounds(547, 83, 84, 23);
-			contentPane.add(btnFeminino);
+			add(btnFeminino);
 			
 			JLabel lblNewLabel_12 = new JLabel("Turma:");
 			lblNewLabel_12.setBounds(337, 211, 83, 14);
-			contentPane.add(lblNewLabel_12);
+			add(lblNewLabel_12);
 	
 			ArrayList<TurmaVO> turmas = this.alunoController.turmas();
 			final JComboBox cbTurma = new JComboBox(turmas.toArray());
 			cbTurma.setBounds(451, 209, 109, 18);
-			contentPane.add(cbTurma);
+			add(cbTurma);
 			
 			JButton btnNewButton = new JButton("Limpar");
 			btnNewButton.setBounds(276, 482, 89, 23);
-			contentPane.add(btnNewButton);
+			add(btnNewButton);
 			
 			JButton btnNewButton_1 = new JButton("Cadastrar");
 			btnNewButton_1.addActionListener(new ActionListener() {
@@ -229,23 +226,23 @@ public class CadastroAluno extends JFrame {
 	
 						String msg = alunoController.inserir(alunoVO);
 						
-						JOptionPane.showMessageDialog(contentPane, msg);
+						JOptionPane.showMessageDialog(null, msg);
 					} catch (Exception exception) {
-						JOptionPane.showMessageDialog(contentPane, exception.getMessage());
+						JOptionPane.showMessageDialog(null, exception.getMessage());
 					}
 				}
 			});
 			btnNewButton_1.setBounds(423, 482, 104, 23);
-			contentPane.add(btnNewButton_1);
+			add(btnNewButton_1);
 			
 			JLabel lblNewLabel_13 = new JLabel("Nome completo:");
 			lblNewLabel_13.setBounds(10, 26, 83, 22);
-			contentPane.add(lblNewLabel_13);
+			add(lblNewLabel_13);
 			
 			txtNome = new JTextField();
 			txtNome.setColumns(10);
 			txtNome.setBounds(113, 27, 280, 18);
-			contentPane.add(txtNome);
+			add(txtNome);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
