@@ -217,7 +217,7 @@ public class CadastroInstrutor extends JFrame {
 			JButton btnNewButton_1 = new JButton("Cadastrar");
 			btnNewButton_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
+				
 				}
 			});
 			btnNewButton_1.setBounds(311, 476, 89, 23);
