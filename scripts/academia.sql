@@ -6,12 +6,12 @@ use academia;
 
 CREATE TABLE PESSOAS(
     id_pessoa int not null auto_increment,
-    cpf varchar(11) unique not null,
+    cpf varchar(14) unique not null,
     nome varchar(100) not null,
-    idade int(3) not null,
+    nascimento date not null,
     sexo char(1) not null,
-    telefone varchar(11),
-    celular varchar(11),
+    telefone varchar(13),
+    celular varchar(14),
     email varchar(255) not null,
     bairro varchar(255) not null,
     cidade varchar (100) not null,
@@ -87,5 +87,5 @@ CREATE TABLE DIA_SEMANA_TURMAS(
 
 INSERT INTO MODALIDADES(nome) VALUES('Musculação');
 
-INSERT INTO DIAS_SEMANA(NOME, VALUE) 
+INSERT INTO DIAS_SEMANA(NOME) 
 VALUES ('Segunda-feira'), ('Terça-feira'), ('Quarta-feira'), ('Quinta-feira'), ('Sexta-feira');
