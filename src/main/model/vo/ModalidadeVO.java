@@ -42,4 +42,9 @@ public class ModalidadeVO {
 		this.turmas = turmas;
 	}
 
+	@Override
+	public String toString() {
+		return id + ". " + nome;
+	}
+
 }

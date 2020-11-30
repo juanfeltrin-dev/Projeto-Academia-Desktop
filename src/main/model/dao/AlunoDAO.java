@@ -13,32 +13,38 @@ import model.vo.AlunoVO;
 import model.vo.TurmaVO;
 
 public class AlunoDAO {
-	public int inserir(AlunoVO aluno, int pessoaId)
+	public boolean inserir(AlunoVO aluno, int pessoaId) throws Exception
 	{
-		String sql 			= "INSERT INTO ALUNOS(id_pessoa, observacoes, data_matricula, matricula, id_turma) "
-				+ "VALUES(?, ?, ?, ?, ?)";
-		Connection conn 	= Database.getConnection();
+		String sql 					= "INSERT INTO ALUNOS(id_pessoa, observacoes, data_matricula, matricula, id_turma) "
+									+ "VALUES(?, ?, ?, ?, ?)";
+		Connection conn 			= Database.getConnection();
 		PreparedStatement prepStmt 	= Database.getPreparedStatement(conn, sql);
-		int resultado 		= 0;
-		
+		int resultado 				= 0;
+
 		try {
 			prepStmt.setInt(1, pessoaId);
 			prepStmt.setString(2, aluno.getObservacao());
-			Date matricula = java.sql.Date.valueOf(aluno.getDataMatricula());
+			Date matricula = java.sql.Date.valueOf(LocalDate.now());
 			prepStmt.setDate(3, matricula);
 			prepStmt.setString(4, aluno.getMatricula());
 			prepStmt.setInt(5, aluno.getTurma().getId());
 			
-			resultado = prepStmt.executeUpdate(sql);
+			resultado = prepStmt.executeUpdate();
+
+			if(resultado == Database.CODE_RETURN_SUCCESS) {
+				return true;
+			}
 		} catch (SQLException exception) {
 			System.out.println("Erro ao executar a query de cadastro do aluno.\n");
 			System.out.println("Erro: " + exception.getMessage());
+			
+			throw new Exception(exception.getMessage());
 		} finally {
 			Database.closePreparedStatement(prepStmt);
 			Database.closeConnection(conn);
 		}
 		
-		return resultado;
+		return false;
 	}
 	
 	public boolean alterar(AlunoVO aluno)

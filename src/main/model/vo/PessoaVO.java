@@ -65,7 +65,7 @@ public class PessoaVO {
 		return nascimento;
 	}
 	
-	public void setIdade(LocalDate nascimento) {
+	public void setNascimento(LocalDate nascimento) {
 		this.nascimento = nascimento;
 	}
 	

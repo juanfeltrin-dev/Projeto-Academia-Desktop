@@ -1,11 +1,20 @@
 package controller;
 import model.vo.AlunoVO;
+import model.vo.ModalidadeVO;
+import model.vo.TurmaVO;
+
+import java.util.ArrayList;
+
 import model.bo.AlunoBO;
+import model.dao.ModalidadeDAO;
+import model.dao.TurmaDAO;
 
 public class AlunoController extends PessoaController{
 	AlunoBO bo = new AlunoBO();
+	ModalidadeDAO modalidadeDAO = new ModalidadeDAO();
+	TurmaDAO turmaDAO = new TurmaDAO();
 
-	public String inserir(AlunoVO aluno){
+	public String inserir(AlunoVO aluno) throws Exception {
 		try {
 			validarCampos(aluno);
 			
@@ -18,11 +27,15 @@ public class AlunoController extends PessoaController{
 
 	private static void validarCampos(AlunoVO aluno) throws Exception {
 		try {
-			if (aluno.getNome().isEmpty() && aluno.getNome().length() > 3 && aluno.getNome().length() > 100) {
+			if (aluno.getNome().isEmpty() && (aluno.getNome().length() > 100 || aluno.getNome().length() < 3)) {
 				throw new Exception("Nome não pode ser vazio e deve conter entre 3 e 100 caracteres");
 			}
+
+			if (aluno.getEmail().isEmpty() && (aluno.getEmail().length() > 100 || aluno.getEmail().length() < 3)) {
+				throw new Exception("Email não pode ser vazio e deve conter entre 3 e 100 caracteres");
+			}
 			
-			if (aluno.getCpf().isEmpty() && aluno.getNome().length() == 11) {
+			if (aluno.getCpf().isEmpty() && aluno.getNome().length() != 14) {
 				throw new Exception("CPF deve conter 11 digitoss");
 			}
 			
@@ -34,15 +47,15 @@ public class AlunoController extends PessoaController{
 				throw new Exception("Sexo deve ser M/F");
 			}
 			
-			if (aluno.getEmail().isEmpty() && aluno.getEmail().length() > 3 && aluno.getEmail().length() > 100) {
+			if (aluno.getEmail().isEmpty() && (aluno.getEmail().length() > 100 || aluno.getEmail().length() < 3)) {
 				throw new Exception("Email não pode ser vazio e deve conter entre 3 e 100 caracteres");
 			}
 			
-			if (aluno.getBairro().isEmpty() && aluno.getBairro().length() > 3 && aluno.getBairro().length() > 100) {
+			if (aluno.getBairro().isEmpty() && (aluno.getBairro().length() > 100 || aluno.getBairro().length() < 3)) {
 				throw new Exception("Bairro não pode ser vazio e deve conter entre 3 e 100 caracteres");
 			}
 			
-			if (aluno.getCidade().isEmpty() && aluno.getCidade().length() > 3 && aluno.getCidade().length() > 100) {
+			if (aluno.getCidade().isEmpty() && (aluno.getCidade().length() > 100 || aluno.getCidade().length() < 3)) {
 				throw new Exception("Cidade não pode ser vazio e deve conter entre 3 e 100 caracteres");
 			}
 			
@@ -50,15 +63,11 @@ public class AlunoController extends PessoaController{
 				throw new Exception("Estado deve conter 2 digitos");
 			}
 			
-			if (aluno.getCep().isEmpty() && aluno.getCep().length() == 8) {
+			if (aluno.getCep().isEmpty() && aluno.getCep().length() != 10) {
 				throw new Exception("CEP deve conter 8 digitos");
 			}
-			
-			if (aluno.getDataMatricula().toString().isEmpty()) {
-				throw new Exception("Nascimento não pode ser vazio");
-			}
 		} catch (Exception exception) {
-			System.out.println(exception.getMessage());
+			throw new Exception(exception.getMessage());
 		}
 	}
 
@@ -85,5 +94,9 @@ public class AlunoController extends PessoaController{
 			return exception.getMessage();
 		}
 
+	}
+	
+	public ArrayList<TurmaVO> turmas() {
+		return this.turmaDAO.consultarTodos();
 	}
 }

@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
+import model.vo.ModalidadeVO;
 import model.vo.TurmaVO;
 
 public class TurmaDAO {
@@ -112,5 +114,31 @@ public class TurmaDAO {
 		}
 		
 		return id;
+	}
+	
+	public ArrayList<TurmaVO> consultarTodos()
+	{
+		String sql 							= "SELECT id_turma, nome FROM turmas";
+		Connection conexao 					= Database.getConnection();
+		PreparedStatement prepStmt 			= Database.getPreparedStatement(conexao, sql);
+		ArrayList<TurmaVO> turmas 			= new ArrayList<TurmaVO>();
+		
+		try {
+			ResultSet rs = prepStmt.executeQuery();
+			
+			while(rs.next()) {
+				TurmaVO turma = new TurmaVO();
+				turma.setId(rs.getInt("id_turma"));
+				turma.setNome(rs.getString("nome"));
+				turmas.add(turma);
+			}
+		} catch(SQLException exception) {
+			System.out.println("Erro ao consultar as turmas. Causa: \n:" + exception.getMessage());
+		} finally {
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conexao);
+		}
+		
+		return turmas;
 	}
 }

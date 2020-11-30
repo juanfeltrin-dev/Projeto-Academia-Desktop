@@ -9,12 +9,12 @@ import java.sql.ResultSet;
 import model.vo.PessoaVO;
 
 public class PessoaDAO {
-	public int inserir(PessoaVO pessoa)
+	public int inserir(PessoaVO pessoa) throws Exception
 	{
 		String sql 					= "INSERT INTO PESSOAS(cpf, nome, nascimento, sexo, telefone, celular, email, bairro, cidade, estado, cep) "
 				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Connection conexao 			= Database.getConnection();
-		PreparedStatement prepStmt 	= Database.getPreparedStatement(conexao, sql);
+		PreparedStatement prepStmt 	= Database.getPreparedStatementWithGeneratedKeys(conexao, sql);
 		int result 					= 0;
 		
 		try {
@@ -22,32 +22,34 @@ public class PessoaDAO {
 			prepStmt.setString(2, pessoa.getNome());
 			Date nascimento = java.sql.Date.valueOf(pessoa.getNascimento());
 			prepStmt.setDate(3, nascimento);
-			prepStmt.setLong(4, pessoa.getSexo());
+			prepStmt.setString(4, String.valueOf(pessoa.getSexo()));
 			prepStmt.setString(5, pessoa.getTelefone());
 			prepStmt.setString(6, pessoa.getCelular());
 			prepStmt.setString(7, pessoa.getEmail());
 			prepStmt.setString(8, pessoa.getBairro());
 			prepStmt.setString(9, pessoa.getCidade());
-			prepStmt.setLong(10, pessoa.getEstado());
+			prepStmt.setString(10, pessoa.getEstado());
 			prepStmt.setString(11, pessoa.getCep());
-
-			int codeReturn = prepStmt.executeUpdate();
+			prepStmt.executeUpdate();
 			
-			if(codeReturn == Database.CODE_RETURN_SUCCESS) {
-				ResultSet rs 	= prepStmt.getGeneratedKeys();
-				result 			= rs.getInt(1);
+			ResultSet rs 	= prepStmt.getGeneratedKeys();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
 			}
 		} catch(SQLException exception) {
 			System.out.println("Erro ao inserir pessoa. Causa: \n:" + exception.getMessage());
+			
+			throw new Exception(exception.getMessage());
 		} finally {
-			Database.closePreparedStatement(prepStmt);
+			Database.closeStatement(prepStmt);
 			Database.closeConnection(conexao);
 		}
 		
 		return result;
 	}
 	
-	public boolean alterar(PessoaVO pessoa)
+	public boolean alterar(PessoaVO pessoa) throws Exception
 	{
 		String sql 					= "UPDATE PESSOAS SET NOME = ?, NASCIMENTO = ?, SEXO = ?, TELEFONE = ?, CELULAR = ?, EMAIL = ?, BAIRRO = ?, CIDADE = ?, ESTADO = ?, CEP = ? "
 				+ "WHERE PESSOA_ID = ?";
@@ -65,7 +67,7 @@ public class PessoaDAO {
 			prepStmt.setString(6, pessoa.getEmail());
 			prepStmt.setString(7, pessoa.getBairro());
 			prepStmt.setString(8, pessoa.getCidade());
-			prepStmt.setLong(9, pessoa.getEstado());
+			prepStmt.setString(9, pessoa.getEstado());
 			prepStmt.setString(10, pessoa.getCep());
 			prepStmt.setInt(10, pessoa.getPessoaId());
 		
@@ -74,6 +76,8 @@ public class PessoaDAO {
 		} catch (SQLException exception) {
 			System.out.println("Erro ao executar a query de alteração da pessoa.\n");
 			System.out.println("Erro: " + exception.getMessage());
+			
+			throw new Exception(exception.getMessage());
 		} finally {
 			Database.closePreparedStatement(prepStmt);
 			Database.closeConnection(conn);
@@ -105,15 +109,15 @@ public class PessoaDAO {
 		return excluiu;
 	}
 	
-	public boolean validaSeCpfExiste(String cpf)
+	public boolean validaSeCpfExiste(String cpf) throws Exception
 	{
-		String sql					= "SELECT CPF FROM PESSOA WHERE CPF = ?";
+		String sql					= "SELECT CPF FROM PESSOAS WHERE CPF = '" + cpf + "'";
 		Connection conexao 			= Database.getConnection();
 		PreparedStatement prepStmt 	= Database.getPreparedStatement(conexao, sql);
 		ResultSet resultado 		= null;
-		
+
 		try {
-			prepStmt.setString(1, cpf);
+//			prepStmt.setString(1, cpf);
 
 			resultado = prepStmt.executeQuery(sql);
 			
@@ -123,6 +127,8 @@ public class PessoaDAO {
 		} catch (SQLException exception) {
 			System.out.println("\nErro ao executar a Query que verifica existência de pessoa por CPF.");
 			System.out.println("Erro: " + exception.getMessage());
+			
+			throw new Exception(exception.getMessage() + "\n" + exception.getLocalizedMessage() + "\n" + exception.getStackTrace().toString());
 		} finally {
 			Database.closeResultSet(resultado);
 			Database.closePreparedStatement(prepStmt);

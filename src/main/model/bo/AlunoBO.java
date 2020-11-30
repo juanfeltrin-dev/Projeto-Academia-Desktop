@@ -37,20 +37,19 @@ public class AlunoBO {
 		}
 	}
 
-	public String inserir(AlunoVO aluno) {
+	public String inserir(AlunoVO aluno) throws Exception {
 		try {
 			if (this.pessoaDAO.validaSeCpfExiste(aluno.getCpf())) {
 				throw new Exception("CPF já existente!");
 			}
-			
+
 			int pessoaId = this.pessoaDAO.inserir(aluno);
-			
-			aluno.getTurma().setId(this.turmaDAO.buscarIdPeloNome(aluno.getTurma().getNome()));
+
 			this.alunoDAO.inserir(aluno, pessoaId);
 			
 			return "Aluno cadastrado com sucesso!";
 		} catch (Exception exception) {
-			return exception.getMessage();
+			throw new Exception(exception.getMessage());
 		}
 	}
 	
