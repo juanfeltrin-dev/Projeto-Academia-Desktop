@@ -1,7 +1,10 @@
 package model.bo;
 
 
+import java.util.ArrayList;
+
 import model.dao.TurmaDAO;
+import model.vo.AlunoVO;
 import model.vo.DiaSemanaVO;
 import model.vo.TurmaVO;
 
@@ -28,4 +31,13 @@ public class TurmaBO {
 			return exception.getMessage();
 		}
 	}
+	public ArrayList<TurmaVO> consultarTodasTurmas() {
+		ArrayList<TurmaVO> turma = turmaDAO.consultarTodos();
+
+		if (turma.isEmpty()) {
+			System.out.println("Sem alunos na base da dados.");
+		}
+		return turma;	
+	}
+	
 }
