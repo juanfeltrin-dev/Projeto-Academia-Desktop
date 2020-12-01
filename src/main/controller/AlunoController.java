@@ -70,6 +70,7 @@ public class AlunoController extends PessoaController{
 			throw new Exception(exception.getMessage());
 		}
 	}
+	
 
 	public String excluir(String alunoId, String pesssoaId) throws Exception {
 		int aluno 		= 0;
@@ -95,6 +96,11 @@ public class AlunoController extends PessoaController{
 		}
 
 	}
+	public AlunoVO verificarAlunoPorCpf(String cpfInformado) {
+		String cpf = removerMascara(cpfInformado);
+		return bo.verificarAlunoPorCpf(cpf);
+	}
+
 
 	public ArrayList<TurmaVO> turmas() {
 		return this.turmaDAO.consultarTodos();

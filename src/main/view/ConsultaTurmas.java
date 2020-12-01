@@ -24,7 +24,7 @@ import java.awt.event.ActionEvent;
 
 public class ConsultaTurmas extends JPanel {
 	private JTable tblTurma;
-	private ArrayList<TurmaVO> Turmas;
+	private ArrayList<AlunoVO> alunos;
 
 
 
@@ -83,9 +83,9 @@ public class ConsultaTurmas extends JPanel {
 
 			DefaultTableModel model = (DefaultTableModel) tblTurma.getModel();
 
-			for (TurmaVO a : Turmas) {
+			for (AlunoVO a : alunos) {
 
-				DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+				
 
 				Object[] novaLinhaDaTabela = new Object[3];
 				novaLinhaDaTabela[0] = a.getId();

@@ -50,6 +50,9 @@ public class AlunoBO {
 			throw new Exception(exception.getMessage());
 		}
 	}
+	public AlunoVO verificarAlunoPorCpf(String cpf) {
+		return dao.verificarAlunoPorCpf(cpf);
+	}
 	
 	public String checkIn(String cpf) throws Exception {
 		try {

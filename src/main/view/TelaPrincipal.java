@@ -14,6 +14,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
 
 public class TelaPrincipal extends JFrame {
 
@@ -49,12 +50,14 @@ public class TelaPrincipal extends JFrame {
 		setJMenuBar(menuBar);
 		
 		JMenu menuCadastro = new JMenu("Cadastro");
+		menuCadastro.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/+.png")));
 		menuCadastro.setHorizontalAlignment(SwingConstants.LEFT);
 		menuCadastro.setForeground(Color.BLACK);
 		menuCadastro.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		menuBar.add(menuCadastro);
 		
 		JMenuItem menuItemCadastroAluno = new JMenuItem("Aluno");
+		menuItemCadastroAluno.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/CadastroInstrutor.png")));
 		menuItemCadastroAluno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				contentPane = new CadastroAluno();
@@ -65,6 +68,7 @@ public class TelaPrincipal extends JFrame {
 		menuCadastro.add(menuItemCadastroAluno);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Instrutor");
+		mntmNewMenuItem.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/CadastroAluno.png")));
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				contentPane = new CadastroInstrutor();
@@ -75,6 +79,7 @@ public class TelaPrincipal extends JFrame {
 		menuCadastro.add(mntmNewMenuItem);
 		
 		JMenuItem CadastroModalidade = new JMenuItem("Modalidade");
+		CadastroModalidade.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/modalidade.png")));
 		CadastroModalidade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				contentPane = new CadastroModalidade();
@@ -85,6 +90,7 @@ public class TelaPrincipal extends JFrame {
 		menuCadastro.add(CadastroModalidade);
 		
 		JMenuItem CadastroTurma = new JMenuItem("Turma");
+		CadastroTurma.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/turma.png")));
 		CadastroTurma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				contentPane = new CadastroTurma();
@@ -100,6 +106,7 @@ public class TelaPrincipal extends JFrame {
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem MenuConsultaTurmas = new JMenuItem("Turmas");
+		MenuConsultaTurmas.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/lupa.png")));
 		MenuConsultaTurmas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				contentPane = new ConsultaTurmas();
