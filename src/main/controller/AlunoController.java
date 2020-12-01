@@ -71,7 +71,7 @@ public class AlunoController extends PessoaController{
 		}
 	}
 
-	public String excluir(String alunoId, String pesssoaId) {
+	public String excluir(String alunoId, String pesssoaId) throws Exception {
 		int aluno 		= 0;
 		int pessoa 		= 0;
 
