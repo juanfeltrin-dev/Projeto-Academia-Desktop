@@ -35,7 +35,7 @@ public class TurmaBO {
 		ArrayList<TurmaVO> turma = turmaDAO.consultarTodos();
 
 		if (turma.isEmpty()) {
-			System.out.println("Sem alunos na base da dados.");
+			System.out.println("Sem turmas na base da dados.");
 		}
 		return turma;	
 	}
