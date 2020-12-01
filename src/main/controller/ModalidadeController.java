@@ -1,6 +1,9 @@
 package controller;
 
+import java.util.ArrayList;
+
 import model.bo.ModalidadeBO;
+import model.dao.ModalidadeDAO;
 import model.vo.ModalidadeVO;
 
 public class ModalidadeController {
@@ -24,5 +27,16 @@ public class ModalidadeController {
 		} catch (Exception exception) {
 			throw new Exception(exception.getMessage());
 		}
+		
+	}
+	ModalidadeDAO dao = new ModalidadeDAO();
+	public ArrayList<String> consultarNomeModalidade() {
+		ArrayList<String> listaNomes = new ArrayList<String>();
+		
+		for(ModalidadeVO vo : dao.consultarTodos()) {
+			listaNomes.add(vo.getNome());
+		}
+		
+		return listaNomes;		
 	}
 }

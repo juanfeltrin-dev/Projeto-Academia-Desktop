@@ -64,6 +64,36 @@ public class TelaPrincipal extends JFrame {
 		});
 		menuCadastro.add(menuItemCadastroAluno);
 		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Instrutor");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				contentPane = new CadastroInstrutor();
+				setContentPane(contentPane);
+				revalidate();		
+			}
+		});
+		menuCadastro.add(mntmNewMenuItem);
+		
+		JMenuItem CadastroModalidade = new JMenuItem("Modalidade");
+		CadastroModalidade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				contentPane = new CadastroModalidade();
+				setContentPane(contentPane);
+				revalidate();	
+			}
+		});
+		menuCadastro.add(CadastroModalidade);
+		
+		JMenuItem CadastroTurma = new JMenuItem("Turma");
+		CadastroTurma.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				contentPane = new CadastroTurma();
+				setContentPane(contentPane);
+				revalidate();	
+			}
+		});
+		menuCadastro.add(CadastroTurma);
+		
 		JMenu mnNewMenu = new JMenu("Consulta");
 		mnNewMenu.setForeground(Color.BLACK);
 		mnNewMenu.setFont(new Font("Segoe UI", Font.BOLD, 13));

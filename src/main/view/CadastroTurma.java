@@ -23,9 +23,9 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 
-public class CadastroTurma extends JFrame {
+public class CadastroTurma extends JPanel {
 
-	private JPanel contentPane;
+	
 	private JTextField textField;
 	private TurmaVO turmaVO = new TurmaVO();
 	private TurmaBO turmaBO = new TurmaBO();
@@ -50,20 +50,18 @@ public class CadastroTurma extends JFrame {
 	 * Create the frame.
 	 */
 	public CadastroTurma() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		setBounds(100, 100, 528, 456);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("nome da turma:");
 		lblNewLabel.setBounds(23, 32, 79, 14);
-		contentPane.add(lblNewLabel);
+		add(lblNewLabel);
 		
 		textField = new JTextField();
 		textField.setBounds(112, 29, 163, 20);
-		contentPane.add(textField);
+		add(textField);
 		textField.setColumns(10);
 		
 		TimePickerSettings timeSettings = new TimePickerSettings();
@@ -72,31 +70,31 @@ public class CadastroTurma extends JFrame {
 		
 		final TimePicker time = new TimePicker(timeSettings);
 		time.setBounds(23, 75, 119, 29);
-		getContentPane().add(time);
+		add(time);
 		
 		JButton btnNewButton = new JButton("Cadastrar Turma");
 		btnNewButton.setBounds(178, 367, 141, 23);
-		contentPane.add(btnNewButton);
+		add(btnNewButton);
 		
 		final JCheckBox chckbxNewCheckBox = new JCheckBox("Segunda - Feira");
 		chckbxNewCheckBox.setBounds(23, 121, 119, 23);
-		contentPane.add(chckbxNewCheckBox);
+		add(chckbxNewCheckBox);
 		
 		final JCheckBox chckbxNewCheckBox_1 = new JCheckBox("Ter\u00E7a - Feira");
 		chckbxNewCheckBox_1.setBounds(22, 147, 97, 23);
-		contentPane.add(chckbxNewCheckBox_1);
+		add(chckbxNewCheckBox_1);
 		
 		final JCheckBox chckbxNewCheckBox_2 = new JCheckBox("Quarta - Feira");
 		chckbxNewCheckBox_2.setBounds(23, 173, 97, 23);
-		contentPane.add(chckbxNewCheckBox_2);
+		add(chckbxNewCheckBox_2);
 		
 		final JCheckBox chckbxNewCheckBox_3 = new JCheckBox("Quinta - Feira");
 		chckbxNewCheckBox_3.setBounds(23, 199, 97, 23);
-		contentPane.add(chckbxNewCheckBox_3);
+		add(chckbxNewCheckBox_3);
 		
 		final JCheckBox chckbxNewCheckBox_4 = new JCheckBox("Sexta - Feira");
 		chckbxNewCheckBox_4.setBounds(23, 225, 97, 23);
-		contentPane.add(chckbxNewCheckBox_4);		
+		add(chckbxNewCheckBox_4);		
 
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
