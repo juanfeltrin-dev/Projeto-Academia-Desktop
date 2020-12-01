@@ -3,6 +3,7 @@ package controller;
 import model.bo.InstrutorBO;
 import model.dao.ModalidadeDAO;
 import model.dao.TurmaDAO;
+import model.vo.AlunoVO;
 import model.vo.InstrutorVO;
 
 	public class InstrutorController extends PessoaController{
@@ -15,6 +16,29 @@ import model.vo.InstrutorVO;
 				validarCampos(instrutor);
 				return bo.inserir(instrutor);
 			} catch(Exception exception) {
+				return exception.getMessage();
+			}
+		}
+		public String excluir(String instrutorId, String pesssoaId) throws Exception {
+			int instrutor 		= 0;
+			int pessoa 		= 0;
+
+			try {
+				instrutor 			= Integer.parseInt(instrutorId);
+				pessoa 			= Integer.parseInt(pesssoaId);
+				
+				return bo.excluir(instrutor, pessoa);
+			} catch (NumberFormatException e) {
+				return "Insira um número inteiro";
+			}	
+		}
+		
+		public String alterar(InstrutorVO instrutor) {
+			try {
+				validarCampos(instrutor);
+				
+				return bo.alterar(instrutor);
+			} catch (Exception exception) {
 				return exception.getMessage();
 			}
 		}
