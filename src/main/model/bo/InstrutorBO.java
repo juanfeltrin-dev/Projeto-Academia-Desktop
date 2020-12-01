@@ -35,4 +35,9 @@ public class InstrutorBO {
 			throw new Exception(exception.getMessage());
 		}
 	}
+
+	public String excluir(int instrutor, int pessoa) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
