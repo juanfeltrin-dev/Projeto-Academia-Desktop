@@ -63,9 +63,13 @@ public class AlunoBO {
 				LocalTime agora 			= LocalTime.now();
 				LocalTime meiaHoraDepois 	= agora.plusMinutes(30);
 				LocalDate dataHoje			= LocalDate.now();
-				TurmaVO turmaVO 			= this.alunoDAO.obterHorarioTurma(alunoLogado.getCpf(), dataHoje.getDayOfWeek().getValue());
-				
-				if (turmaVO.getHorario().isAfter(agora) && turmaVO.getHorario().isBefore(meiaHoraDepois)) {
+				TurmaVO turmaVO 			= this.alunoDAO.obterHorarioTurma(alunoLogado.getId(), dataHoje.getDayOfWeek().getValue());
+
+				if (turmaVO.getHorario() == null) {
+					throw new Exception("Sua turma não tem horário para hoje");
+				}
+
+				if (agora.isAfter(turmaVO.getHorario()) && turmaVO.getHorario().isBefore(meiaHoraDepois)) {
 					this.alunoDAO.realizarCheckIn(alunoLogado.getId(), turmaVO.getId(), dataHoje, LocalTime.now());
 					
 					return "Liberado!";

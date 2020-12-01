@@ -74,6 +74,7 @@ public class TelaCheckIn extends JFrame {
 						
 						JOptionPane.showMessageDialog(null, msg);
 					} catch (Exception exception) {
+						System.out.println(exception.getMessage());
 						JOptionPane.showMessageDialog(null, exception.getMessage());
 					}
 				}
