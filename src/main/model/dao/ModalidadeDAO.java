@@ -25,6 +25,8 @@ public class ModalidadeDAO {
 			}
 		} catch(SQLException exception) {
 			System.out.println("Erro ao inserir modalidade. Causa: \n:" + exception.getMessage());
+			
+			throw new Exception(exception.getMessage());
 		} finally {
 			Database.closePreparedStatement(prepStmt);
 			Database.closeConnection(conexao);
@@ -57,5 +59,31 @@ public class ModalidadeDAO {
 		}
 		
 		return modalidades;
+	}
+
+	public boolean excluir(int id) throws Exception {
+		String sql 							= "DELETE FROM modalidades WHERE id_modalidade = ?";
+		Connection conexao 					= Database.getConnection();
+		PreparedStatement prepStmt 			= Database.getPreparedStatement(conexao, sql);
+		int resultado 						= 0; 
+		
+		try {
+			prepStmt.setInt(1, id);
+			
+			resultado = prepStmt.executeUpdate();
+
+			if(resultado == Database.CODE_RETURN_SUCCESS) {
+				return true;
+			}
+		} catch(SQLException exception) {
+			System.out.println("Erro ao excluir modalidade. Causa: \n:" + exception.getMessage());
+			
+			throw new Exception(exception.getMessage());
+		} finally {
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conexao);
+		}
+		
+		return false;
 	}
 }

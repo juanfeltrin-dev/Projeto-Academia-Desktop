@@ -16,4 +16,15 @@ public class ModalidadeBO {
 			throw new Exception(exception.getMessage());
 		}
 	}
+	
+	public String excluir(int id) throws Exception
+	{
+		try {
+			this.modalidadeDAO.excluir(id);
+			
+			return "Modalidade excluida com sucesso!";
+		} catch (Exception exception) {
+			throw new Exception(exception.getMessage());
+		}
+	}
 }

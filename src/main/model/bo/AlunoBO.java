@@ -5,35 +5,33 @@ import java.time.LocalTime;
 
 import model.dao.AlunoDAO;
 import model.dao.PessoaDAO;
-import model.dao.TurmaDAO;
 import model.vo.AlunoVO;
 import model.vo.TurmaVO;
 
 public class AlunoBO {
 	private PessoaDAO pessoaDAO = new PessoaDAO();
 	private AlunoDAO alunoDAO 	= new AlunoDAO();
-	private TurmaDAO turmaDAO 	= new TurmaDAO();
 
 	//	a validar regra
-	public String excluir(int alunoId, int pessoaId) {
+	public String excluir(int alunoId, int pessoaId) throws Exception {
 		try {
 			this.alunoDAO.excluir(alunoId);
 			this.pessoaDAO.excluir(pessoaId);
 			
 			return "Aluno excluido com sucesso!";
 		} catch (Exception exception) {
-			return exception.getMessage();
+			throw new Exception(exception.getMessage());
 		}
 	}
 
-	public String alterar(AlunoVO aluno) {
+	public String alterar(AlunoVO aluno) throws Exception {
 		try {
 			this.pessoaDAO.alterar(aluno);
 			this.alunoDAO.alterar(aluno);
 			
 			return "Aluno alterado com sucesso!";
 		} catch (Exception exception) {
-			return exception.getMessage();
+			throw new Exception(exception.getMessage());
 		}
 	}
 
@@ -53,19 +51,19 @@ public class AlunoBO {
 		}
 	}
 	
-	public String checkIn(AlunoVO aluno) {
+	public String checkIn(String cpf) throws Exception {
 		try {
-			AlunoVO alunoLogado = this.alunoDAO.login(aluno.getCpf());
+			AlunoVO alunoLogado = this.alunoDAO.login(cpf);
 			
-			if (this.alunoDAO.verificaSeTreinouHoje(alunoLogado.getId(), LocalDate.now())) {
-				throw new Exception("Você já treinou hoje!");
-			}
+			if (alunoLogado.isLogado()) {			
+				if (this.alunoDAO.verificaSeTreinouHoje(alunoLogado.getId(), LocalDate.now())) {
+					throw new Exception("Você já treinou hoje!");
+				}
 			
-			if (alunoLogado.isLogado()) {
 				LocalTime agora 			= LocalTime.now();
 				LocalTime meiaHoraDepois 	= agora.plusMinutes(30);
 				LocalDate dataHoje			= LocalDate.now();
-				TurmaVO turmaVO 			= this.alunoDAO.obterHorarioTurma(aluno.getCpf(), dataHoje.getDayOfWeek().getValue());
+				TurmaVO turmaVO 			= this.alunoDAO.obterHorarioTurma(alunoLogado.getCpf(), dataHoje.getDayOfWeek().getValue());
 				
 				if (turmaVO.getHorario().isAfter(agora) && turmaVO.getHorario().isBefore(meiaHoraDepois)) {
 					this.alunoDAO.realizarCheckIn(alunoLogado.getId(), turmaVO.getId(), dataHoje, LocalTime.now());
@@ -78,7 +76,7 @@ public class AlunoBO {
 				throw new Exception("Você não está cadastrado no sistema!");
 			}
 		} catch (Exception exception) {
-			return exception.getMessage();
+			throw new Exception(exception.getMessage());
 		}
 	}
 }

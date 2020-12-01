@@ -5,16 +5,10 @@ import model.dao.PessoaDAO;
 import model.vo.InstrutorVO;
 
 public class InstrutorBO {
-	private PessoaDAO pessoaDAO;
-	private InstrutorDAO instrutorDAO;
-	
-	public InstrutorBO(PessoaDAO pessoaDAO, InstrutorDAO instrutorDAO) {
-		super();
-		this.pessoaDAO 		= pessoaDAO;
-		this.instrutorDAO 	= instrutorDAO;
-	}
+	private PessoaDAO pessoaDAO 		= new PessoaDAO();;
+	private InstrutorDAO instrutorDAO 	= new InstrutorDAO();
 
-	public String inserir(InstrutorVO instrutor)
+	public String inserir(InstrutorVO instrutor) throws Exception
 	{
 		try {
 			if (this.pessoaDAO.validaSeCpfExiste(instrutor.getCpf())) {
@@ -26,7 +20,19 @@ public class InstrutorBO {
 			
 			return "Instrutor cadastrado com sucesso!";
 		} catch (Exception exception) {
-			return exception.getMessage();
+			throw new Exception(exception.getMessage());
+		}
+	}
+	
+	public String alterar(InstrutorVO instrutor) throws Exception
+	{
+		try {
+			this.pessoaDAO.alterar(instrutor);
+			this.instrutorDAO.alterar(instrutor);
+			
+			return "Instrutor alterado com sucesso!";
+		} catch (Exception exception) {
+			throw new Exception(exception.getMessage());
 		}
 	}
 }

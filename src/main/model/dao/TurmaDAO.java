@@ -16,20 +16,23 @@ public class TurmaDAO {
 	{
 		String sql 					= "INSERT INTO TURMAS(NOME, QUANTIDADE_VAGAS, ID_INSTRUTOR, ID_MODALIDADE) VALUES(?, ?, ?, ?)";
 		Connection conexao 			= Database.getConnection();
-		PreparedStatement prepStmt 	= Database.getPreparedStatement(conexao, sql);
+		PreparedStatement prepStmt 	= Database.getPreparedStatementWithGeneratedKeys(conexao, sql);
 		int id						= 0;
 		
 		try {
 			prepStmt.setString(1, turmaVO.getNome());
-			prepStmt.setInt(2, turmaVO.getQuantidadeVagas());
-			prepStmt.setInt(3, turmaVO.getInstrutor().getId());
-			prepStmt.setInt(4, turmaVO.getModalidade().getId());
+			prepStmt.setInt(2, 30);
+			prepStmt.setInt(3, 1);
+			prepStmt.setInt(4, 1);
 
 			int codeReturn = prepStmt.executeUpdate();
 			
 			if(codeReturn == Database.CODE_RETURN_SUCCESS) {
-				ResultSet rs 	= prepStmt.getGeneratedKeys();
-				id 				= rs.getInt(1);
+				ResultSet rs = prepStmt.getGeneratedKeys();
+				
+				if (rs.next()) {
+					id = rs.getInt(1);
+				}
 			}
 		} catch(SQLException exception) {
 			System.out.println("Erro ao inserir turma. Causa: \n:" + exception.getMessage());
@@ -55,14 +58,18 @@ public class TurmaDAO {
 			prepStmt.setTime(3, horaTurma);
 
 			codeReturn = prepStmt.executeUpdate();
+			
+			if (codeReturn == Database.CODE_RETURN_SUCCESS) {
+				return true;
+			}
 		} catch(SQLException exception) {
 			System.out.println("Erro ao inserir horário da turma. Causa: \n:" + exception.getMessage());
 		} finally {
 			Database.closePreparedStatement(prepStmt);
 			Database.closeConnection(conexao);
 		}
-		
-		return codeReturn == Database.CODE_RETURN_SUCCESS;
+
+		return false;
 	}
 	
 	public boolean verificaSeExisteHorario(int diaSemanaId, LocalTime hora)

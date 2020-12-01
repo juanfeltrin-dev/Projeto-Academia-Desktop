@@ -1,5 +1,6 @@
 package model.vo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalTime;
 
@@ -11,13 +12,14 @@ public class TurmaVO {
 	private ModalidadeVO modalidade;
 	private List<AlunoVO> alunos;
 	private LocalTime horario;
+	private ArrayList<Integer> diasDaSemana;
 	
 	public TurmaVO() {
 		super();
 	}
 
 	public TurmaVO(int id, String nome, int quantidadeVagas, InstrutorVO instrutor, ModalidadeVO modalidade,
-			List<AlunoVO> alunos, LocalTime horario) {
+			List<AlunoVO> alunos, LocalTime horario, ArrayList<Integer> diasDaSemana) {
 		super();
 		this.id 				= id;
 		this.nome 				= nome;
@@ -26,6 +28,7 @@ public class TurmaVO {
 		this.modalidade 		= modalidade;
 		this.alunos 			= alunos;
 		this.horario 			= horario;
+		this.diasDaSemana 		= diasDaSemana;
 	}
 
 	public int getId() {
@@ -82,6 +85,14 @@ public class TurmaVO {
 
 	public void setHorario(LocalTime horario) {
 		this.horario = horario;
+	}
+
+	public ArrayList<Integer> getDiasDaSemana() {
+		return diasDaSemana;
+	}
+
+	public void setDiasDaSemana(ArrayList<Integer> diasDaSemana) {
+		this.diasDaSemana = diasDaSemana;
 	}
 
 	@Override
