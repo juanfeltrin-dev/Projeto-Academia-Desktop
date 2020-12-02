@@ -249,4 +249,43 @@ public class AlunoDAO {
 		
 		return false;
 	}
+	
+	public AlunoVO buscarPeloCpf(String cpf) throws Exception {
+		String sql 					= "SELECT pessoas.email, pessoas.telefone, pessoas.celular, pessoas.cep, pessoas.bairro, pessoas.cidade, pessoas.estado, pessoas.id_pessoa "
+									+ "FROM pessoas "
+									+ "INNER JOIN alunos ON pessoas.id_pessoa = alunos.id_pessoa "
+									+ "WHERE pessoas.cpf = ?";
+		Connection conexao 			= Database.getConnection();
+		PreparedStatement prepStmt 	= Database.getPreparedStatement(conexao, sql);
+		ResultSet resultado			= null;
+		AlunoVO aluno				= new AlunoVO();
+		
+		try {
+			prepStmt.setString(1, cpf);
+
+			resultado = prepStmt.executeQuery();
+
+			if(resultado.next()) {
+				aluno.setEmail(resultado.getString(1));
+				aluno.setTelefone(resultado.getString(2));
+				aluno.setCelular(resultado.getString(3));
+				aluno.setCep(resultado.getString(4));
+				aluno.setBairro(resultado.getString(5));
+				aluno.setCidade(resultado.getString(6));
+				aluno.setEstado(resultado.getString(7));
+				aluno.setPessoaId(resultado.getInt(8));
+			}
+		} catch (SQLException exception) {
+			System.out.println("Erro ao executar a query que buscar aluno pelo CPF.\n");
+			System.out.println("Erro: " + exception.getMessage());
+			
+			throw new Exception(exception.getMessage());
+		} finally {
+			Database.closeResultSet(resultado);
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conexao);
+		}
+		
+		return aluno;
+	}
 }

@@ -41,6 +41,7 @@ public class AlterarAluno extends JPanel {
 	private JTextField txtBairro;
 	private JTextField txtCidade;
 	private AlunoController alunoController = new AlunoController();
+	private AlunoVO alunoVO = new AlunoVO();
 	
 	private JTextField textField;
 	private AlunoVO aluno;
@@ -66,8 +67,6 @@ public class AlterarAluno extends JPanel {
 	 */
 	public AlterarAluno() {
 		try {
-			
-			
 			setBounds(100, 100, 708, 571);
 			setBorder(new EmptyBorder(5, 5, 5, 5));
 			setLayout(null);
@@ -162,24 +161,55 @@ public class AlterarAluno extends JPanel {
 			JLabel lblNewLabel_1 = new JLabel("CPF do Aluno:");
 			lblNewLabel_1.setBounds(157, 48, 89, 14);
 			add(lblNewLabel_1);
-			
-			textField = new JTextField();
-			textField.setBounds(246, 45, 137, 20);
-			add(textField);
-			textField.setColumns(10);
+
+			final JFormattedTextField buscarCpf = new JFormattedTextField(mascaraCpf);
+			buscarCpf.setBounds(246, 45, 137, 20);
+			add(buscarCpf);
+			buscarCpf.setColumns(10);
 			
 			JButton btnNewButton_2 = new JButton("Buscar");
+			btnNewButton_2.setBounds(420, 44, 89, 23);
+			add(btnNewButton_2);			
 			btnNewButton_2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
+					try {
+						aluno = alunoController.buscarPeloCpf(buscarCpf.getText());
+
+						txtEmail.setText(aluno.getEmail());
+						txtTelefone.setText(aluno.getTelefone());
+						txtCelular.setText(aluno.getCelular());
+						txtCep.setText(aluno.getCep());
+						txtBairro.setText(aluno.getBairro());
+						txtCidade.setText(aluno.getCidade());
+						cbEstado.setSelectedItem(aluno.getEstado());
+					} catch (Exception exception) {
+						System.out.println(exception.getMessage());
+					}
 				}
 			});
-			btnNewButton_2.setBounds(420, 44, 89, 23);
-			add(btnNewButton_2);
 			
 			JButton btnNewButton_3 = new JButton("Salvar Altera\u00E7\u00F5es");
 			btnNewButton_3.setBounds(276, 408, 128, 23);
 			add(btnNewButton_3);
+			btnNewButton_3.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						aluno.setEmail(txtEmail.getText());
+						aluno.setTelefone(txtTelefone.getText());
+						aluno.setCelular(txtCelular.getText());
+						aluno.setCep(txtCep.getText());
+						aluno.setBairro(txtBairro.getText());
+						aluno.setEstado((String) cbEstado.getSelectedItem());
+						aluno.setCidade(txtCidade.getText());
+
+						String msg = alunoController.alterar(aluno);
+						
+						JOptionPane.showMessageDialog(null, msg);
+					} catch (Exception exception) {
+						JOptionPane.showMessageDialog(null, exception.getMessage());
+					}
+				}
+			});
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

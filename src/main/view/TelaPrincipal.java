@@ -50,7 +50,6 @@ public class TelaPrincipal extends JFrame {
 		setJMenuBar(menuBar);
 		
 		JMenu menuCadastro = new JMenu("Cadastro");
-		menuCadastro.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/+.png")));
 		menuCadastro.setHorizontalAlignment(SwingConstants.LEFT);
 		menuCadastro.setForeground(Color.BLACK);
 		menuCadastro.setFont(new Font("Segoe UI", Font.BOLD, 13));
@@ -115,13 +114,41 @@ public class TelaPrincipal extends JFrame {
 			}
 		});
 		mnNewMenu.add(MenuConsultaTurmas);
+
+		JMenu menuAlterar = new JMenu("Alterar");
+		menuAlterar.setHorizontalAlignment(SwingConstants.LEFT);
+		menuAlterar.setForeground(Color.BLACK);
+		menuAlterar.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		menuBar.add(menuAlterar);
 		
+		JMenuItem menuItemEdicaoAluno = new JMenuItem("Aluno");
+		menuItemEdicaoAluno.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/CadastroInstrutor.png")));
+		menuItemEdicaoAluno.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				contentPane = new AlterarAluno();
+				setContentPane(contentPane);
+				revalidate();				
+			}
+		});
+		menuAlterar.add(menuItemEdicaoAluno);	
+
+		JMenu menuExclusao = new JMenu("Exclusão");
+		menuExclusao.setHorizontalAlignment(SwingConstants.LEFT);
+		menuExclusao.setForeground(Color.BLACK);
+		menuExclusao.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		menuBar.add(menuExclusao);	
+
 		
-		
-	
-		
-		
-	
+		JMenuItem exclusaoModalidade = new JMenuItem("Modalidade");
+		exclusaoModalidade.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/modalidade.png")));
+		exclusaoModalidade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				contentPane = new DeletarModalidade();
+				setContentPane(contentPane);
+				revalidate();	
+			}
+		});
+		menuExclusao.add(exclusaoModalidade);
 	}
 
 }

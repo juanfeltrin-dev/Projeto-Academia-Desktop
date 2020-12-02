@@ -60,6 +60,29 @@ public class ModalidadeDAO {
 		
 		return modalidades;
 	}
+	
+	public boolean verificaSeModalidadePertenceTurma(int id) throws Exception {
+		String sql 							= "SELECT id_turma FROM turmas WHERE id_modalidade = ?";
+		Connection conexao 					= Database.getConnection();
+		PreparedStatement prepStmt 			= Database.getPreparedStatement(conexao, sql);
+		
+		try {
+			prepStmt.setInt(1, id);
+			
+			ResultSet rs = prepStmt.executeQuery();
+			
+			if(rs.next()) {
+				return true;
+			}
+		} catch(SQLException exception) {
+			System.out.println("Erro ao consultar turma por modalidade. Causa: \n:" + exception.getMessage());
+		} finally {
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conexao);
+		}
+		
+		return false;
+	}
 
 	public boolean excluir(int id) throws Exception {
 		String sql 							= "DELETE FROM modalidades WHERE id_modalidade = ?";

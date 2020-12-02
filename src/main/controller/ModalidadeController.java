@@ -8,6 +8,7 @@ import model.vo.ModalidadeVO;
 
 public class ModalidadeController {
 	private ModalidadeBO modalidadeBO = new ModalidadeBO();
+	private ModalidadeDAO dao = new ModalidadeDAO();
 	
 	public String inserir(ModalidadeVO modalidade) throws Exception {
 		try {
@@ -29,14 +30,26 @@ public class ModalidadeController {
 		}
 		
 	}
-	ModalidadeDAO dao = new ModalidadeDAO();
-	public ArrayList<String> consultarNomeModalidade() {
-		ArrayList<String> listaNomes = new ArrayList<String>();
-		
-		for(ModalidadeVO vo : dao.consultarTodos()) {
-			listaNomes.add(vo.getNome());
+	
+	public String excluir(int id) throws Exception {
+		try {
+			if (dao.verificaSeModalidadePertenceTurma(id)) {
+				throw new Exception("Esta modalidade pertence a uma turma!");
+			}
+			
+			dao.excluir(id);
+			
+			return "Modalidade excluído com sucesso!";
+		} catch (Exception exception) {
+			throw new Exception(exception.getMessage());
 		}
-		
-		return listaNomes;		
+	}
+	
+	public ArrayList<ModalidadeVO> consultarNomeModalidade() throws Exception {
+		try {
+			return dao.consultarTodos();
+		} catch (Exception exception) {
+			throw new Exception(exception.getMessage());
+		}
 	}
 }

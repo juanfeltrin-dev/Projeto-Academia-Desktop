@@ -51,28 +51,27 @@ public class PessoaDAO {
 	
 	public boolean alterar(PessoaVO pessoa) throws Exception
 	{
-		String sql 					= "UPDATE PESSOAS SET NOME = ?, NASCIMENTO = ?, SEXO = ?, TELEFONE = ?, CELULAR = ?, EMAIL = ?, BAIRRO = ?, CIDADE = ?, ESTADO = ?, CEP = ? "
-				+ "WHERE PESSOA_ID = ?";
+		String sql 					= "UPDATE PESSOAS SET TELEFONE = ?, CELULAR = ?, EMAIL = ?, BAIRRO = ?, CIDADE = ?, ESTADO = ?, CEP = ? "
+									+ "WHERE ID_PESSOA = ?";
 		Connection conn 			= Database.getConnection();
-		PreparedStatement prepStmt 	= Database.getPreparedStatement(conn, sql);		
-		boolean alterou 			= false;
-		
+		PreparedStatement prepStmt 	= Database.getPreparedStatement(conn, sql);
+		int resultado 				= 0;
+
 		try {
-			prepStmt.setString(1, pessoa.getNome());
-			Date nascimento = java.sql.Date.valueOf(pessoa.getNascimento());
-			prepStmt.setDate(2, nascimento);
-			prepStmt.setLong(3, pessoa.getSexo());
-			prepStmt.setString(4, pessoa.getTelefone());
-			prepStmt.setString(5, pessoa.getCelular());
-			prepStmt.setString(6, pessoa.getEmail());
-			prepStmt.setString(7, pessoa.getBairro());
-			prepStmt.setString(8, pessoa.getCidade());
-			prepStmt.setString(9, pessoa.getEstado());
-			prepStmt.setString(10, pessoa.getCep());
-			prepStmt.setInt(10, pessoa.getPessoaId());
+			prepStmt.setString(1, pessoa.getTelefone());
+			prepStmt.setString(2, pessoa.getCelular());
+			prepStmt.setString(3, pessoa.getEmail());
+			prepStmt.setString(4, pessoa.getBairro());
+			prepStmt.setString(5, pessoa.getCidade());
+			prepStmt.setString(6, pessoa.getEstado());
+			prepStmt.setString(7, pessoa.getCep());
+			prepStmt.setInt(8, pessoa.getPessoaId());
 		
-			ResultSet rs 	= prepStmt.executeQuery();
-			alterou 		= rs.next();
+			resultado = prepStmt.executeUpdate();
+
+			if(resultado == Database.CODE_RETURN_SUCCESS) {
+				return true;
+			}
 		} catch (SQLException exception) {
 			System.out.println("Erro ao executar a query de alteração da pessoa.\n");
 			System.out.println("Erro: " + exception.getMessage());
@@ -83,7 +82,7 @@ public class PessoaDAO {
 			Database.closeConnection(conn);
 		}
 		
-		return alterou;
+		return false;
 	}
 	
 	public boolean excluir(int id)

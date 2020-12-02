@@ -8,6 +8,7 @@ import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+import model.vo.AlunoVO;
 import model.vo.ModalidadeVO;
 import model.vo.TurmaVO;
 
@@ -98,6 +99,33 @@ public class TurmaDAO {
 		
 		return existe;
 	}
+
+	public ArrayList<TurmaVO> consultarTodos()
+	{
+		String sql 							= "SELECT id_turma, nome FROM turmas";
+		Connection conexao 					= Database.getConnection();
+		PreparedStatement prepStmt 			= Database.getPreparedStatement(conexao, sql);
+		ArrayList<TurmaVO> turmas 			= new ArrayList<TurmaVO>();
+		
+		try {
+			
+			ResultSet rs = prepStmt.executeQuery();
+			
+			while(rs.next()) {
+				TurmaVO turma = new TurmaVO();
+				turma.setId(rs.getInt("id_turma"));
+				turma.setNome(rs.getString("nome"));
+				turmas.add(turma);
+			}			
+		} catch (SQLException e) {
+			System.out.println("Erro ao consultar as turmas.\nCausa: " + e.getMessage());
+		} finally {
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conexao);
+		}
+		
+		return turmas;
+	}
 	
 	public int buscarIdPeloNome(String nome)
 	{
@@ -123,29 +151,38 @@ public class TurmaDAO {
 		return id;
 	}
 	
-	public ArrayList<TurmaVO> consultarTodos()
+	public ArrayList<AlunoVO> consultarAlunosPorTurma(int turmaId) throws Exception
 	{
-		String sql 							= "SELECT id_turma, nome FROM turmas";
+		String sql 							= "SELECT alunos.id_aluno, pessoas.nome, pessoas.cpf "
+											+ "FROM alunos "
+											+ "INNER JOIN turmas on alunos.id_turma = turmas.id_turma "
+											+ "INNER JOIN pessoas on alunos.id_pessoa = pessoas.id_pessoa "
+											+ "WHERE turmas.id_turma = ?";
 		Connection conexao 					= Database.getConnection();
 		PreparedStatement prepStmt 			= Database.getPreparedStatement(conexao, sql);
-		ArrayList<TurmaVO> turmas 			= new ArrayList<TurmaVO>();
+		ArrayList<AlunoVO> alunos 			= new ArrayList<AlunoVO>();
 		
 		try {
+			prepStmt.setInt(1, turmaId);
+			
 			ResultSet rs = prepStmt.executeQuery();
 			
 			while(rs.next()) {
-				TurmaVO turma = new TurmaVO();
-				turma.setId(rs.getInt("id_turma"));
-				turma.setNome(rs.getString("nome"));
-				turmas.add(turma);
+				AlunoVO aluno = new AlunoVO();
+				aluno.setId(rs.getInt(1));
+				aluno.setNome(rs.getString(2));
+				aluno.setCpf(rs.getString(3));
+				alunos.add(aluno);
 			}
 		} catch(SQLException exception) {
-			System.out.println("Erro ao consultar as turmas. Causa: \n:" + exception.getMessage());
+			System.out.println("Erro ao consultar os alunos por turma. Causa: \n:" + exception.getMessage());
+			
+			 throw new Exception(exception.getMessage());
 		} finally {
 			Database.closePreparedStatement(prepStmt);
 			Database.closeConnection(conexao);
 		}
 		
-		return turmas;
+		return alunos;
 	}
 }

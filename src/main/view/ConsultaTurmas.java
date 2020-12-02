@@ -15,6 +15,7 @@ import model.vo.TurmaVO;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -25,7 +26,8 @@ import java.awt.event.ActionEvent;
 public class ConsultaTurmas extends JPanel {
 	private JTable tblTurma;
 	private ArrayList<AlunoVO> alunos;
-
+	private AlunoController alunoController = new AlunoController();
+	private TurmaController turmaController = new TurmaController();
 
 
 	/**
@@ -52,8 +54,9 @@ public class ConsultaTurmas extends JPanel {
 		setBounds(100, 100, 489, 397);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(null);
-		
-		JComboBox comboBox = new JComboBox();
+
+		ArrayList<TurmaVO> turmas = this.alunoController.turmas();
+		final JComboBox comboBox = new JComboBox(turmas.toArray());
 		comboBox.setBounds(153, 27, 125, 22);
 		add(comboBox);
 		
@@ -61,17 +64,22 @@ public class ConsultaTurmas extends JPanel {
 		lblNewLabel.setBounds(42, 31, 111, 14);
 		add(lblNewLabel);
 		
-		tblTurma = new JTable();
+		DefaultTableModel model = new DefaultTableModel();
+		tblTurma = new JTable(model);
 		tblTurma.setBounds(10, 63, 416, 226);
 		add(tblTurma);
 		
 		JButton btnConsultar = new JButton("Consultar");
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TurmaController controller = new TurmaController();
-				Turmas = controller.consultarTodasTurmas();
-				
-				atualizarTabelaAlunos(); 
+				try {
+					int turmaId = Integer.parseInt(comboBox.getSelectedItem().toString().replaceAll("\\D+",""));	
+					alunos 		= turmaController.consultarAlunosPorTurma(turmaId);
+					
+					atualizarTabelaAlunos();
+				} catch (Exception exception) {
+					JOptionPane.showMessageDialog(null, exception.getMessage());
+				}
 			}
 		});
 		btnConsultar.setBounds(338, 27, 89, 23);
@@ -85,16 +93,18 @@ public class ConsultaTurmas extends JPanel {
 
 			for (AlunoVO a : alunos) {
 
+				model.addColumn("Matricula");
+				model.addColumn("Nome");
+				model.addColumn("CPF");
 				
-
 				Object[] novaLinhaDaTabela = new Object[3];
 				novaLinhaDaTabela[0] = a.getId();
 				novaLinhaDaTabela[1] = a.getNome();
 				novaLinhaDaTabela[2] = a.getCpf();
 				
 
-				model.addRow(novaLinhaDaTabela);
+				model.addRow(novaLinhaDaTabela);			
+			}
 			
-				}
 		}
 	}	

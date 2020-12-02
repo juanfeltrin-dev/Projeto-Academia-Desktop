@@ -27,7 +27,6 @@ public class AlunoBO {
 	public String alterar(AlunoVO aluno) throws Exception {
 		try {
 			this.pessoaDAO.alterar(aluno);
-			this.alunoDAO.alterar(aluno);
 			
 			return "Aluno alterado com sucesso!";
 		} catch (Exception exception) {
@@ -49,9 +48,6 @@ public class AlunoBO {
 		} catch (Exception exception) {
 			throw new Exception(exception.getMessage());
 		}
-	}
-	public AlunoVO verificarAlunoPorCpf(String cpf) {
-		return dao.verificarAlunoPorCpf(cpf);
 	}
 	
 	public String checkIn(String cpf) throws Exception {
@@ -82,6 +78,20 @@ public class AlunoBO {
 			} else {
 				throw new Exception("Você não está cadastrado no sistema!");
 			}
+		} catch (Exception exception) {
+			throw new Exception(exception.getMessage());
+		}
+	}
+	
+	public AlunoVO buscarPeloCpf(String cpf) throws Exception {
+		try {
+			AlunoVO aluno = this.alunoDAO.buscarPeloCpf(cpf);
+			
+			if (aluno == null) {
+				throw new Exception("Aluno não encontrado!");
+			}
+			
+			return aluno;
 		} catch (Exception exception) {
 			throw new Exception(exception.getMessage());
 		}

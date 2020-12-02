@@ -31,13 +31,17 @@ public class TurmaBO {
 			return exception.getMessage();
 		}
 	}
-	public ArrayList<TurmaVO> consultarTodasTurmas() {
-		ArrayList<TurmaVO> turma = turmaDAO.consultarTodos();
+	public ArrayList<AlunoVO> consultarAlunosPorTurma(int turmaId) throws Exception {
+		try {
+			ArrayList<AlunoVO> alunos = turmaDAO.consultarAlunosPorTurma(turmaId);
 
-		if (turma.isEmpty()) {
-			System.out.println("Sem turmas na base da dados.");
+			if (alunos.isEmpty()) {
+				 throw new Exception("Sem turmas na base da dados.");
+			}
+			return alunos;	
+		} catch (Exception exception) {
+			 throw new Exception(exception.getMessage());
 		}
-		return turma;	
 	}
 	
 }

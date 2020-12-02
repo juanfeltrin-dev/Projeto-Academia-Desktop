@@ -14,6 +14,7 @@ public class InstrutorController extends PessoaController{
 	public String inserir(InstrutorVO instrutor) throws Exception {
 		try {			
 			validarCampos(instrutor);
+			
 			return bo.inserir(instrutor);
 		} catch(Exception exception) {
 			return exception.getMessage();
