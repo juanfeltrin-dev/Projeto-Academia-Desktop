@@ -6,6 +6,7 @@ import model.vo.TurmaVO;
 import java.util.ArrayList;
 
 import model.bo.AlunoBO;
+import model.dao.AlunoDAO;
 import model.dao.ModalidadeDAO;
 import model.dao.TurmaDAO;
 
@@ -13,6 +14,7 @@ public class AlunoController extends PessoaController{
 	AlunoBO bo = new AlunoBO();
 	ModalidadeDAO modalidadeDAO = new ModalidadeDAO();
 	TurmaDAO turmaDAO = new TurmaDAO();
+	AlunoDAO alunoDAO = new AlunoDAO();
 
 	public String inserir(AlunoVO aluno) throws Exception {
 		try {
@@ -66,17 +68,11 @@ public class AlunoController extends PessoaController{
 		}
 	}	
 
-	public String excluir(String alunoId, String pesssoaId) throws Exception {
-		int aluno 		= 0;
-		int pessoa 		= 0;
-
+	public String excluir(int idAluno) throws Exception {
 		try {
-			aluno 			= Integer.parseInt(alunoId);
-			pessoa 			= Integer.parseInt(pesssoaId);
-
-			return bo.excluir(aluno, pessoa);
-		} catch (NumberFormatException e) {
-			return "Insira um número inteiro";
+			return bo.excluir(idAluno);
+		} catch (Exception exception) {
+			throw new Exception(exception.getMessage());
 		}	
 	}
 
@@ -127,5 +123,9 @@ public class AlunoController extends PessoaController{
 
 	public ArrayList<TurmaVO> turmas() {
 		return this.turmaDAO.consultarTodos();
+	}
+	
+	public ArrayList<AlunoVO> alunos() {
+		return this.alunoDAO.consultarAlunos();
 	}
 }

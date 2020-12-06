@@ -149,6 +149,17 @@ public class TelaPrincipal extends JFrame {
 			}
 		});
 		menuExclusao.add(exclusaoModalidade);
+		
+		JMenuItem menuItemExclusaoAluno = new JMenuItem("Aluno");
+		menuItemExclusaoAluno.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/CadastroInstrutor.png")));
+		menuItemExclusaoAluno.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				contentPane = new DeletarAluno();
+				setContentPane(contentPane);
+				revalidate();				
+			}
+		});
+		menuExclusao.add(menuItemExclusaoAluno);
 	}
 
 }

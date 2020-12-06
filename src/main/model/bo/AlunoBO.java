@@ -12,11 +12,13 @@ public class AlunoBO {
 	private PessoaDAO pessoaDAO = new PessoaDAO();
 	private AlunoDAO alunoDAO 	= new AlunoDAO();
 
-	//	a validar regra
-	public String excluir(int alunoId, int pessoaId) throws Exception {
+	public String excluir(int idAluno) throws Exception {
 		try {
-			this.alunoDAO.excluir(alunoId);
-			this.pessoaDAO.excluir(pessoaId);
+			int idPessoa = this.alunoDAO.consultarIdPessoa(idAluno);
+			
+			this.alunoDAO.excluirCheckIn(idAluno);
+			this.alunoDAO.excluir(idAluno);
+			this.pessoaDAO.excluir(idPessoa);
 			
 			return "Aluno excluido com sucesso!";
 		} catch (Exception exception) {

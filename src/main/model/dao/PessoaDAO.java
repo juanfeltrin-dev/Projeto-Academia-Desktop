@@ -89,14 +89,17 @@ public class PessoaDAO {
 	{
 		String sql 					= "DELETE FROM PESSOAS WHERE ID_PESSOA = ?";
 		Connection conn 			= Database.getConnection();
-		PreparedStatement prepStmt 	= Database.getPreparedStatement(conn, sql);		
-		boolean excluiu 			= false;
+		PreparedStatement prepStmt 	= Database.getPreparedStatement(conn, sql);
+		int resultado 				= 0;
 		
 		try {
 			prepStmt.setInt(1, id);
-			
-			ResultSet rs 	= prepStmt.executeQuery();
-			excluiu 		= rs.next();
+
+			resultado = prepStmt.executeUpdate();
+
+			if(resultado == Database.CODE_RETURN_SUCCESS) {
+				return true;
+			}
 		} catch (SQLException exception) {
 			System.out.println("Erro ao executar a query de exclusão da pessoa.\n");
 			System.out.println("Erro: " + exception.getMessage());
@@ -105,7 +108,7 @@ public class PessoaDAO {
 			Database.closeConnection(conn);
 		}
 		
-		return excluiu;
+		return false;
 	}
 	
 	public boolean validaSeCpfExiste(String cpf) throws Exception

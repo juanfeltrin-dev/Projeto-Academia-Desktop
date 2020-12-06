@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 import model.vo.AlunoVO;
 import model.vo.TurmaVO;
@@ -81,14 +82,17 @@ public class AlunoDAO {
 	{
 		String sql 					= "DELETE FROM ALUNOS WHERE ID_ALUNO = ?";
 		Connection conn 			= Database.getConnection();
-		PreparedStatement prepStmt 	= Database.getPreparedStatement(conn, sql);		
-		boolean excluiu 			= false;
+		PreparedStatement prepStmt 	= Database.getPreparedStatement(conn, sql);
+		int resultado 				= 0;
 		
 		try {
 			prepStmt.setInt(1, id);
-			
-			ResultSet rs 	= prepStmt.executeQuery();
-			excluiu 		= rs.next();
+
+			resultado = prepStmt.executeUpdate();
+
+			if(resultado == Database.CODE_RETURN_SUCCESS) {
+				return true;
+			}
 		} catch (SQLException exception) {
 			System.out.println("Erro ao executar a query de exclusão do aluno.\n");
 			System.out.println("Erro: " + exception.getMessage());
@@ -99,7 +103,92 @@ public class AlunoDAO {
 			Database.closeConnection(conn);
 		}
 		
-		return excluiu;
+		return false;
+	}
+	
+	public boolean excluirCheckIn(int idAluno) throws Exception
+	{
+		String sql 					= "DELETE FROM CHECK_IN WHERE ID_ALUNO = ?";
+		Connection conn 			= Database.getConnection();
+		PreparedStatement prepStmt 	= Database.getPreparedStatement(conn, sql);
+		int resultado 				= 0;
+		
+		try {
+			prepStmt.setInt(1, idAluno);
+
+			resultado = prepStmt.executeUpdate();
+
+			if(resultado == Database.CODE_RETURN_SUCCESS) {
+				return true;
+			}
+		} catch (SQLException exception) {
+			System.out.println("Erro ao executar a query de exclusão de check-in do aluno.\n");
+			System.out.println("Erro: " + exception.getMessage());
+
+			throw new Exception(exception.getMessage());
+		} finally {
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conn);
+		}
+		
+		return false;
+	}
+	
+	public int consultarIdPessoa(int idAluno) throws Exception
+	{
+		String sql 					= "SELECT id_pessoa FROM alunos "
+									+ "WHERE id_aluno = ?";
+		Connection conn 			= Database.getConnection();
+		PreparedStatement prepStmt 	= Database.getPreparedStatement(conn, sql);
+		
+		try {
+			prepStmt.setInt(1, idAluno);
+			
+			ResultSet rs = prepStmt.executeQuery();
+			
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException exception) {
+			System.out.println("Erro ao executar a query de consultar id pessoa do aluno.\n");
+			System.out.println("Erro: " + exception.getMessage());
+
+			throw new Exception(exception.getMessage());
+		} finally {
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conn);
+		}
+		
+		return 0;
+	}
+	
+	public ArrayList<AlunoVO> consultarAlunos()
+	{
+		String sql 					= "SELECT alunos.id_aluno, pessoas.nome FROM alunos "
+									+ "INNER JOIN pessoas ON alunos.id_pessoa = pessoas.id_pessoa ";;
+		Connection conn 			= Database.getConnection();
+		PreparedStatement prepStmt 	= Database.getPreparedStatement(conn, sql);
+		ArrayList<AlunoVO> alunos	= new ArrayList<AlunoVO>();
+		
+		try {			
+			ResultSet rs = prepStmt.executeQuery();
+			
+			while (rs.next()) {
+				AlunoVO aluno = new AlunoVO();
+				
+				aluno.setId(rs.getInt(1));
+				aluno.setNome(rs.getString(2));
+				alunos.add(aluno);
+			}
+		} catch (SQLException exception) {
+			System.out.println("Erro ao executar a query de consultar alunos.\n");
+			System.out.println("Erro: " + exception.getMessage());
+		} finally {
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conn);
+		}
+		
+		return alunos;
 	}
 	
 	public AlunoVO login(String cpf) throws Exception

@@ -71,4 +71,9 @@ public class AlunoVO extends PessoaVO {
 	public void setLogado(boolean logado) {
 		this.logado = logado;
 	}
+
+	@Override
+	public String toString() {
+		return id + ". " + this.getNome();
+	}
 }
