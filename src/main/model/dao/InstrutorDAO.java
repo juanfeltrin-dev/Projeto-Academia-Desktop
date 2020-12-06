@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import model.vo.AlunoVO;
 import model.vo.InstrutorVO;
@@ -103,5 +104,117 @@ public class InstrutorDAO {
 		}
 		
 		return instrutor;
+	}
+	
+	public ArrayList<InstrutorVO> consultarTodos() {
+		String sql 							= "SELECT instrutores.id_instrutor, pessoas.nome FROM instrutores "
+											+ "INNER JOIN pessoas ON instrutores.id_pessoa = pessoas.id_pessoa ";
+		Connection conexao 					= Database.getConnection();
+		PreparedStatement prepStmt 			= Database.getPreparedStatement(conexao, sql);
+		ArrayList<InstrutorVO> instrutores 	= new ArrayList<InstrutorVO>();
+		ResultSet rs						= null;
+		
+		try {
+			rs = prepStmt.executeQuery();
+			
+			while (rs.next()) {
+				InstrutorVO instrutor = new InstrutorVO();
+				
+				instrutor.setId(rs.getInt(1));
+				instrutor.setNome(rs.getString(2));
+
+				instrutores.add(instrutor);
+			}
+			
+		} catch (SQLException exception) {
+			System.out.println("Erro ao executar a query que busca todos os instrutores.\n");
+			System.out.println("Erro: " + exception.getMessage());
+		} finally {
+			Database.closeResultSet(rs);
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conexao);
+		}
+		
+		return instrutores;
+	}
+	
+	public boolean verificaSePertenceTurma(int idInstrutor) throws Exception {
+		String sql 							= "SELECT id_turma FROM turmas WHERE id_instrutor = ?";
+		Connection conexao 					= Database.getConnection();
+		PreparedStatement prepStmt 			= Database.getPreparedStatement(conexao, sql);
+		
+		try {
+			prepStmt.setInt(1, idInstrutor);
+			
+			ResultSet rs = prepStmt.executeQuery();
+			
+			if(rs.next()) {
+				return true;
+			}
+		} catch(SQLException exception) {
+			System.out.println("Erro ao consultar se instrutor pertence a turma. Causa: \n:" + exception.getMessage());
+			throw new Exception("Erro ao consultar se instrutor pertence a turma. Causa: \n:" + exception.getMessage());
+		} finally {
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conexao);
+		}
+		
+		return false;
+	}
+	
+	public int consultarIdPessoa(int idInstrutor) throws Exception
+	{
+		String sql 					= "SELECT id_pessoa FROM instrutores "
+									+ "WHERE id_instrutor = ?";
+		Connection conn 			= Database.getConnection();
+		PreparedStatement prepStmt 	= Database.getPreparedStatement(conn, sql);
+		
+		try {
+			prepStmt.setInt(1, idInstrutor);
+			
+			ResultSet rs = prepStmt.executeQuery();
+			
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException exception) {
+			System.out.println("Erro ao executar a query de consultar id pessoa do aluno.\n");
+			System.out.println("Erro: " + exception.getMessage());
+
+			throw new Exception("Erro ao executar a query de consultar id pessoa do aluno. Causa: \n" + exception.getMessage());
+		} finally {
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conn);
+		}
+		
+		return 0;
+	}
+	
+	public boolean excluir(int id) throws Exception
+	{
+		String sql 					= "DELETE FROM instrutores WHERE id_instrutor = ?";
+		Connection conn 			= Database.getConnection();
+		PreparedStatement prepStmt 	= Database.getPreparedStatement(conn, sql);
+		int resultado 				= 0;
+		
+		try {
+			prepStmt.setInt(1, id);
+
+			resultado = prepStmt.executeUpdate();
+
+			if(resultado == Database.CODE_RETURN_SUCCESS) {
+				return true;
+			}
+		} catch (SQLException exception) {
+			System.out.println("Erro ao executar a query de exclusão do instrutor.\n");
+			System.out.println("Erro: " + exception.getMessage());
+
+			throw new Exception("Erro ao executar a query de exclusão do instrutor. Causa: \n" + exception.getMessage());
+		} finally {
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conn);
+		}
+		
+		return false;
 	}
 }

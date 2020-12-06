@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import model.bo.TurmaBO;
 import model.vo.AlunoVO;
 import model.vo.TurmaVO;
+import util.GerarPlanilha;
 
 
 
@@ -48,4 +49,9 @@ public class TurmaController {
 			throw new Exception(exception.getMessage());
 		}
 	 }
+	 
+	 public String gerarPlanilha(ArrayList<AlunoVO> alunos, String caminho) {			
+		GerarPlanilha geradorExcel = new GerarPlanilha();
+		return geradorExcel.gerarPlanilhaAlunos(caminho, alunos);
+	}
 }

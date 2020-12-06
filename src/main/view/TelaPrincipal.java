@@ -171,6 +171,17 @@ public class TelaPrincipal extends JFrame {
 			}
 		});
 		menuExclusao.add(menuItemExclusaoAluno);
+		
+		JMenuItem menuItemExclusaoInstrutor = new JMenuItem("Instrutor");
+		menuItemExclusaoInstrutor.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/CadastroInstrutor.png")));
+		menuItemExclusaoInstrutor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				contentPane = new DeletarInstrutor();
+				setContentPane(contentPane);
+				revalidate();		
+			}
+		});
+		menuExclusao.add(menuItemExclusaoInstrutor);
 	}
 
 }

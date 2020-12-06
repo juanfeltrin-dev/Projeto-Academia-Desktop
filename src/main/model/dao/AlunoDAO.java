@@ -165,7 +165,7 @@ public class AlunoDAO {
 	public ArrayList<AlunoVO> consultarAlunos()
 	{
 		String sql 					= "SELECT alunos.id_aluno, pessoas.nome FROM alunos "
-									+ "INNER JOIN pessoas ON alunos.id_pessoa = pessoas.id_pessoa ";;
+									+ "INNER JOIN pessoas ON alunos.id_pessoa = pessoas.id_pessoa ";
 		Connection conn 			= Database.getConnection();
 		PreparedStatement prepStmt 	= Database.getPreparedStatement(conn, sql);
 		ArrayList<AlunoVO> alunos	= new ArrayList<AlunoVO>();

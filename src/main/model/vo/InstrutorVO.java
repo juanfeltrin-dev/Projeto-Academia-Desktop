@@ -52,5 +52,10 @@ public class InstrutorVO extends PessoaVO {
 	public void setTurmas(List<TurmaVO> turmas) {
 		this.turmas = turmas;
 	}
+
+	@Override
+	public String toString() {
+		return id + ". " + this.getNome();
+	}
 	
 }

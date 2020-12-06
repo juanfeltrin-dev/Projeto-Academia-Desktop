@@ -1,6 +1,9 @@
 package controller;
 
+import java.util.ArrayList;
+
 import model.bo.InstrutorBO;
+import model.dao.InstrutorDAO;
 import model.dao.ModalidadeDAO;
 import model.dao.TurmaDAO;
 import model.vo.AlunoVO;
@@ -10,6 +13,7 @@ public class InstrutorController extends PessoaController{
 	InstrutorBO bo = new InstrutorBO();
 	ModalidadeDAO modalidadeDAO = new ModalidadeDAO();
 	TurmaDAO turmaDAO = new TurmaDAO();
+	private InstrutorDAO instrutorDAO = new InstrutorDAO();
 
 	public String inserir(InstrutorVO instrutor) throws Exception {
 		try {			
@@ -20,19 +24,18 @@ public class InstrutorController extends PessoaController{
 			return exception.getMessage();
 		}
 	}
-//	public String excluir(String instrutorId, String pesssoaId) throws Exception {
-//		int instrutor 		= 0;
-//		int pessoa 		= 0;
-//
-//		try {
-//			instrutor 			= Integer.parseInt(instrutorId);
-//			pessoa 			= Integer.parseInt(pesssoaId);
-//
-//			return bo.excluir(instrutor, pessoa);
-//		} catch (NumberFormatException e) {
-//			return "Insira um número inteiro";
-//		}	
-//	}
+	
+	public String excluir(int idInstrutor) throws Exception {
+		try {
+			return bo.excluir(idInstrutor);
+		} catch (Exception exception) {
+			throw new Exception(exception.getMessage());
+		}	
+	}
+	
+	public ArrayList<InstrutorVO> consultarTodos() {
+		return this.instrutorDAO.consultarTodos();
+	}
 
 	public String alterar(InstrutorVO instrutor) throws Exception {
 		try {

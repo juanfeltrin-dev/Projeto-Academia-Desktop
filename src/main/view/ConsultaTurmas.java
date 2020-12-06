@@ -14,6 +14,7 @@ import model.vo.AlunoVO;
 import model.vo.TurmaVO;
 
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -84,12 +85,34 @@ public class ConsultaTurmas extends JPanel {
 		});
 		btnConsultar.setBounds(338, 27, 89, 23);
 		add(btnConsultar);
+		
+		JButton btnNewButton = new JButton("Gerar Arquivo XLS");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser janelaArquivos = new JFileChooser();
+
+				int opcaoSelecionada = janelaArquivos.showSaveDialog(null);
+
+				if (opcaoSelecionada == JFileChooser.APPROVE_OPTION) {
+					String caminho = janelaArquivos.getSelectedFile().getAbsolutePath();
+
+					TurmaController controller = new TurmaController();
+					String mensagem = controller.gerarPlanilha(alunos, caminho);
+
+					JOptionPane.showMessageDialog(null, mensagem);
+				}
+			}
+		});
+		btnNewButton.setBounds(121, 348, 226, 23);
+		add(btnNewButton);
 	}
 		
 		private void atualizarTabelaAlunos() {
 	
-
 			DefaultTableModel model = (DefaultTableModel) tblTurma.getModel();
+			
+			model.setRowCount(0);
+			model.setColumnCount(0);
 
 			for (AlunoVO a : alunos) {
 

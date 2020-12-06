@@ -76,6 +76,7 @@ public class ModalidadeDAO {
 			}
 		} catch(SQLException exception) {
 			System.out.println("Erro ao consultar turma por modalidade. Causa: \n:" + exception.getMessage());
+			throw new Exception("Erro ao consultar turma por modalidade. Causa: \n:" + exception.getMessage());
 		} finally {
 			Database.closePreparedStatement(prepStmt);
 			Database.closeConnection(conexao);
@@ -101,7 +102,7 @@ public class ModalidadeDAO {
 		} catch(SQLException exception) {
 			System.out.println("Erro ao excluir modalidade. Causa: \n:" + exception.getMessage());
 			
-			throw new Exception(exception.getMessage());
+			throw new Exception("Erro ao excluir modalidade. Causa: \n:" + exception.getMessage());
 		} finally {
 			Database.closePreparedStatement(prepStmt);
 			Database.closeConnection(conexao);
