@@ -183,7 +183,7 @@ public class AlterarAluno extends JPanel {
 						txtCidade.setText(aluno.getCidade());
 						cbEstado.setSelectedItem(aluno.getEstado());
 					} catch (Exception exception) {
-						System.out.println(exception.getMessage());
+						JOptionPane.showMessageDialog(null, exception.getMessage());
 					}
 				}
 			});

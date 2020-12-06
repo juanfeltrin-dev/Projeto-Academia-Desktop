@@ -2,6 +2,7 @@ package model.bo;
 
 import model.dao.InstrutorDAO;
 import model.dao.PessoaDAO;
+import model.vo.AlunoVO;
 import model.vo.InstrutorVO;
 
 public class InstrutorBO {
@@ -28,16 +29,24 @@ public class InstrutorBO {
 	{
 		try {
 			this.pessoaDAO.alterar(instrutor);
-			this.instrutorDAO.alterar(instrutor);
-			
+
 			return "Instrutor alterado com sucesso!";
 		} catch (Exception exception) {
 			throw new Exception(exception.getMessage());
 		}
 	}
-
-	public String excluir(int instrutor, int pessoa) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public InstrutorVO buscarPeloCpf(String cpf) throws Exception {
+		try {
+			InstrutorVO instrutor = this.instrutorDAO.buscarPeloCpf(cpf);
+			
+			if (instrutor == null) {
+				throw new Exception("Instrutor não encontrado!");
+			}
+			
+			return instrutor;
+		} catch (Exception exception) {
+			throw new Exception(exception.getMessage());
+		}
 	}
 }

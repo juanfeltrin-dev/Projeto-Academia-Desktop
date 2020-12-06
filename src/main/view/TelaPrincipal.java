@@ -56,7 +56,7 @@ public class TelaPrincipal extends JFrame {
 		menuBar.add(menuCadastro);
 		
 		JMenuItem menuItemCadastroAluno = new JMenuItem("Aluno");
-		menuItemCadastroAluno.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/CadastroInstrutor.png")));
+		menuItemCadastroAluno.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/CadastroAluno.png")));
 		menuItemCadastroAluno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				contentPane = new CadastroAluno();
@@ -67,7 +67,7 @@ public class TelaPrincipal extends JFrame {
 		menuCadastro.add(menuItemCadastroAluno);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Instrutor");
-		mntmNewMenuItem.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/CadastroAluno.png")));
+		mntmNewMenuItem.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/CadastroInstrutor.png")));
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				contentPane = new CadastroInstrutor();
@@ -122,7 +122,7 @@ public class TelaPrincipal extends JFrame {
 		menuBar.add(menuAlterar);
 		
 		JMenuItem menuItemEdicaoAluno = new JMenuItem("Aluno");
-		menuItemEdicaoAluno.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/CadastroInstrutor.png")));
+		menuItemEdicaoAluno.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/CadastroAluno.png")));
 		menuItemEdicaoAluno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				contentPane = new AlterarAluno();
@@ -131,6 +131,17 @@ public class TelaPrincipal extends JFrame {
 			}
 		});
 		menuAlterar.add(menuItemEdicaoAluno);	
+		
+		JMenuItem menuItemEdicaoInstrutor = new JMenuItem("Instrutor");
+		menuItemEdicaoInstrutor.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/CadastroInstrutor.png")));
+		menuItemEdicaoInstrutor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				contentPane = new AlterarInstrutor();
+				setContentPane(contentPane);
+				revalidate();		
+			}
+		});
+		menuAlterar.add(menuItemEdicaoInstrutor);
 
 		JMenu menuExclusao = new JMenu("Exclusão");
 		menuExclusao.setHorizontalAlignment(SwingConstants.LEFT);
@@ -151,7 +162,7 @@ public class TelaPrincipal extends JFrame {
 		menuExclusao.add(exclusaoModalidade);
 		
 		JMenuItem menuItemExclusaoAluno = new JMenuItem("Aluno");
-		menuItemExclusaoAluno.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/CadastroInstrutor.png")));
+		menuItemExclusaoAluno.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icons/CadastroAluno.png")));
 		menuItemExclusaoAluno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				contentPane = new DeletarAluno();

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.vo.AlunoVO;
 import model.vo.InstrutorVO;
 
 public class InstrutorDAO {
@@ -63,5 +64,44 @@ public class InstrutorDAO {
 		}
 		
 		return alterou;
+	}
+	
+	public InstrutorVO buscarPeloCpf(String cpf) throws Exception {
+		String sql 					= "SELECT pessoas.email, pessoas.telefone, pessoas.celular, pessoas.cep, pessoas.bairro, pessoas.cidade, pessoas.estado, pessoas.id_pessoa "
+									+ "FROM pessoas "
+									+ "INNER JOIN instrutores ON pessoas.id_pessoa = instrutores.id_pessoa "
+									+ "WHERE pessoas.cpf = ?";
+		Connection conexao 			= Database.getConnection();
+		PreparedStatement prepStmt 	= Database.getPreparedStatement(conexao, sql);
+		ResultSet resultado			= null;
+		InstrutorVO instrutor		= new InstrutorVO();
+		
+		try {
+			prepStmt.setString(1, cpf);
+
+			resultado = prepStmt.executeQuery();
+
+			if(resultado.next()) {
+				instrutor.setEmail(resultado.getString(1));
+				instrutor.setTelefone(resultado.getString(2));
+				instrutor.setCelular(resultado.getString(3));
+				instrutor.setCep(resultado.getString(4));
+				instrutor.setBairro(resultado.getString(5));
+				instrutor.setCidade(resultado.getString(6));
+				instrutor.setEstado(resultado.getString(7));
+				instrutor.setPessoaId(resultado.getInt(8));
+			}
+		} catch (SQLException exception) {
+			System.out.println("Erro ao executar a query que busca pessoa pelo CPF.\n");
+			System.out.println("Erro: " + exception.getMessage());
+			
+			throw new Exception(exception.getMessage());
+		} finally {
+			Database.closeResultSet(resultado);
+			Database.closePreparedStatement(prepStmt);
+			Database.closeConnection(conexao);
+		}
+		
+		return instrutor;
 	}
 }
