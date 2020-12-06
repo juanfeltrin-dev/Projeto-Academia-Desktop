@@ -11,7 +11,7 @@ import model.vo.TurmaVO;
 public class TurmaBO {
 	private TurmaDAO turmaDAO = new TurmaDAO();
 	
-	public String inserir(TurmaVO turmaVO)
+	public boolean inserir(TurmaVO turmaVO) throws Exception
 	{
 		try {
 			for (int i = 0; i < turmaVO.getDiasDaSemana().size(); i++) {
@@ -26,9 +26,9 @@ public class TurmaBO {
 				this.turmaDAO.inserirHorarios(turmaId, turmaVO.getDiasDaSemana().get(i), turmaVO.getHorario());
 			}
 			
-			return "Turma criada com sucesso!";
+			return true;
 		} catch (Exception exception) {
-			return exception.getMessage();
+			throw new Exception(exception.getMessage());
 		}
 	}
 	public ArrayList<AlunoVO> consultarAlunosPorTurma(int turmaId) throws Exception {

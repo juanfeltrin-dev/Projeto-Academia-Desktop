@@ -27,8 +27,7 @@ public class ModalidadeController {
 			}
 		} catch (Exception exception) {
 			throw new Exception(exception.getMessage());
-		}
-		
+		}		
 	}
 	
 	public String excluir(int id) throws Exception {
@@ -45,11 +44,7 @@ public class ModalidadeController {
 		}
 	}
 	
-	public ArrayList<ModalidadeVO> consultarNomeModalidade() throws Exception {
-		try {
-			return dao.consultarTodos();
-		} catch (Exception exception) {
-			throw new Exception(exception.getMessage());
-		}
+	public ArrayList<ModalidadeVO> consultarNomeModalidade() {
+		return dao.consultarTodos();
 	}
 }
