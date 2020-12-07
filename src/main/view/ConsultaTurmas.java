@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import controller.AlunoController;
 import controller.TurmaController;
@@ -57,7 +58,7 @@ public class ConsultaTurmas extends JPanel {
 		setLayout(null);
 
 		ArrayList<TurmaVO> turmas = this.alunoController.turmas();
-		final JComboBox comboBox = new JComboBox(turmas.toArray());
+		final JComboBox<?> comboBox = new JComboBox<Object>(turmas.toArray());
 		comboBox.setBounds(153, 27, 125, 22);
 		add(comboBox);
 		
@@ -69,6 +70,8 @@ public class ConsultaTurmas extends JPanel {
 		tblTurma = new JTable(model);
 		tblTurma.setBounds(10, 63, 416, 226);
 		add(tblTurma);
+		tblTurma.setRowSorter(new TableRowSorter<DefaultTableModel>(model));//filtro tabela
+		
 		
 		JButton btnConsultar = new JButton("Consultar");
 		btnConsultar.addActionListener(new ActionListener() {
