@@ -12,9 +12,9 @@ import util.GerarPlanilha;
 public class TurmaController {
 	private TurmaBO bo = new TurmaBO();
 	
-	 public ArrayList<AlunoVO> consultarAlunosPorTurma(int turmaId) throws Exception {
+	 public ArrayList<AlunoVO> consultarAlunosPorTurma(AlunoVO aluno) throws Exception {
 		 try {
-				return bo.consultarAlunosPorTurma(turmaId);
+				return bo.consultarAlunosPorTurma(aluno);
 		 } catch (Exception exception) {
 			 throw new Exception(exception.getMessage());
 		 }

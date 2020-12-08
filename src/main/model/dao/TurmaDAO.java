@@ -151,27 +151,23 @@ public class TurmaDAO {
 		return id;
 	}
 	
-	public ArrayList<AlunoVO> consultarAlunosPorTurma(int turmaId) throws Exception
+	public ArrayList<AlunoVO> consultarAlunosPorTurma(AlunoVO alunoVO) throws Exception
 	{
-		String sql 							= "SELECT alunos.id_aluno, pessoas.nome, pessoas.cpf "
-											+ "FROM alunos "
-											+ "INNER JOIN turmas on alunos.id_turma = turmas.id_turma "
-											+ "INNER JOIN pessoas on alunos.id_pessoa = pessoas.id_pessoa "
-											+ "WHERE turmas.id_turma = ?";
+		String sql 							= this.criarFiltro(alunoVO);
 		Connection conexao 					= Database.getConnection();
 		PreparedStatement prepStmt 			= Database.getPreparedStatement(conexao, sql);
 		ArrayList<AlunoVO> alunos 			= new ArrayList<AlunoVO>();
 		
-		try {
-			prepStmt.setInt(1, turmaId);
-			
+		try {			
 			ResultSet rs = prepStmt.executeQuery();
 			
-			while(rs.next()) {
+			while (rs.next()) {
 				AlunoVO aluno = new AlunoVO();
 				aluno.setId(rs.getInt(1));
 				aluno.setNome(rs.getString(2));
 				aluno.setCpf(rs.getString(3));
+				aluno.setCidade(rs.getString(4));
+				aluno.setBairro(rs.getString(5));
 				alunos.add(aluno);
 			}
 		} catch(SQLException exception) {
@@ -184,5 +180,30 @@ public class TurmaDAO {
 		}
 		
 		return alunos;
+	}
+	
+	private String criarFiltro(AlunoVO aluno)
+	{
+		String sql = "SELECT alunos.id_aluno, pessoas.nome, pessoas.cpf, pessoas.cidade, pessoas.bairro "
+				+ "FROM alunos "
+				+ "INNER JOIN turmas on alunos.id_turma = turmas.id_turma "
+				+ "INNER JOIN pessoas on alunos.id_pessoa = pessoas.id_pessoa "
+				+ "WHERE turmas.id_turma = " + aluno.getTurma().getId();
+		
+		String cpfSemMascara = aluno.getCpf().replaceAll("\\D+","");
+
+		if (!cpfSemMascara.isEmpty()) {
+			sql += " AND pessoas.cpf = '" + aluno.getCpf() + "'";
+		}
+
+		if (!aluno.getCidade().isEmpty()) {
+			sql += " AND pessoas.cidade LIKE '%" + aluno.getCidade() + "%'";
+		}
+		
+		if (!aluno.getBairro().isEmpty()) {
+			sql += " AND pessoas.bairro LIKE '%" + aluno.getBairro() + "%'";
+		}
+
+		return sql;
 	}
 }

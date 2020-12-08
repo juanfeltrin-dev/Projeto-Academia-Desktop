@@ -31,9 +31,9 @@ public class TurmaBO {
 			throw new Exception(exception.getMessage());
 		}
 	}
-	public ArrayList<AlunoVO> consultarAlunosPorTurma(int turmaId) throws Exception {
+	public ArrayList<AlunoVO> consultarAlunosPorTurma(AlunoVO aluno) throws Exception {
 		try {
-			ArrayList<AlunoVO> alunos = turmaDAO.consultarAlunosPorTurma(turmaId);
+			ArrayList<AlunoVO> alunos = turmaDAO.consultarAlunosPorTurma(aluno);
 
 			if (alunos.isEmpty()) {
 				 throw new Exception("Sem turmas na base da dados.");
