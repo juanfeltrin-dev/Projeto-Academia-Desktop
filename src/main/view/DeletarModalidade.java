@@ -10,13 +10,18 @@ import controller.ModalidadeController;
 import controller.TurmaController;
 
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class DeletarModalidade extends JPanel {
 
-	private JComboBox<Object> comboBoxModalidade;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ModalidadeController modalidadeController = new ModalidadeController();
 	/**
 	 * Create the panel.
@@ -24,7 +29,6 @@ public class DeletarModalidade extends JPanel {
 	public DeletarModalidade() {
 		try {
 			setLayout(null);
-			final JPanel contentPane = this;
 			
 			JLabel lblNewLabel = new JLabel("Modalidade:");
 			lblNewLabel.setBounds(112, 115, 73, 14);
@@ -46,8 +50,9 @@ public class DeletarModalidade extends JPanel {
 							String msg 			= modalidadeController.excluir(modalidadeId);
 							
 							JOptionPane.showMessageDialog(null, msg);
-
-							contentPane.revalidate();
+							
+							cbxModalidade.removeAllItems();
+							cbxModalidade.setModel(new DefaultComboBoxModel(modalidadeController.consultarNomeModalidade().toArray()));
 						}
 					} catch (Exception exception) {
 						JOptionPane.showMessageDialog(null, exception.getMessage());

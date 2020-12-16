@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
 public class DeletarAluno extends JPanel {
@@ -33,8 +34,7 @@ public class DeletarAluno extends JPanel {
 		lblAlunos.setBounds(36, 11, 56, 14);
 		add(lblAlunos);
 		
-		ArrayList<AlunoVO> alunos = this.alunoController.alunos();
-		final JComboBox comboBox = new JComboBox(alunos.toArray());
+		final JComboBox comboBox = new JComboBox(this.alunoController.alunos().toArray());
 		comboBox.setBounds(92, 8, 199, 20);
 		add(comboBox);
 		
@@ -52,6 +52,9 @@ public class DeletarAluno extends JPanel {
 						String msg 	= alunoController.excluir(idAluno);
 
 						JOptionPane.showMessageDialog(null, msg);
+						
+						comboBox.removeAllItems();
+						comboBox.setModel(new DefaultComboBoxModel(alunoController.alunos().toArray()));
 					}
 				} catch (Exception exception) {
 					JOptionPane.showMessageDialog(null, exception.getMessage());

@@ -38,8 +38,8 @@ public class GerarPlanilha {
 
 		// Criar o cabeçalho (header)
 		String[] nomesColunas = { "ID", "Nome", "CPF", "Cidade", "Bairro" };
-		criarCabecalho(nomesColunas, aba, linhaAtual);
-
+		linhaAtual = criarCabecalho(nomesColunas, aba, linhaAtual);
+		
 		// Preencher as linhas com os produtos
 		criarLinhasAlunos(alunos	, aba, linhaAtual);
 
@@ -49,35 +49,29 @@ public class GerarPlanilha {
 
 	private void criarLinhasAlunos(ArrayList<AlunoVO> consultarAlunosPorTurma, XSSFSheet aba, int posicaoLinhaAtual) {
 		for (AlunoVO aluno : consultarAlunosPorTurma) {
-			// criar uma nova linha na planilha
 			XSSFRow linhaAtual = aba.createRow(posicaoLinhaAtual);
 
-			// Preencher as células com os atributos do Produto p
 			linhaAtual.createCell(0).setCellValue(aluno.getId());
 			linhaAtual.createCell(1).setCellValue(aluno.getNome());
 			linhaAtual.createCell(2).setCellValue(aluno.getCpf());
 			linhaAtual.createCell(3).setCellValue(aluno.getCidade());
 			linhaAtual.createCell(4).setCellValue(aluno.getBairro());
-		
-
-			// Converter para Date
-			// linhaAtual.createCell(4).setCellValue(new Date(p.get));
-
+			
 			posicaoLinhaAtual++;
 		}
 
 	}
 
-	private void criarCabecalho(String[] nomesColunas, XSSFSheet aba, int posicaoLinhaAtual) {
-		Row linhaAtual = aba.createRow(posicaoLinhaAtual);
+	private int criarCabecalho(String[] nomesColunas, XSSFSheet aba, int posicaoLinhaAtual) {
+		XSSFRow linhaAtual = aba.createRow(posicaoLinhaAtual);
 
-		posicaoLinhaAtual++;
-		// Para mudar o estilo:
-		// https://stackoverflow.com/questions/43467253/setting-style-in-apache-poi
 		for (int i = 0; i < nomesColunas.length; i++) {
-			Cell novaCelula = linhaAtual.createCell(i);
-			novaCelula.setCellValue(nomesColunas[i]);
+			linhaAtual.createCell(i).setCellValue(nomesColunas[i]);
 		}
+		
+		posicaoLinhaAtual++;
+
+		return posicaoLinhaAtual;
 	}
 
 	private String salvarNoDisco(XSSFWorkbook planilha, String caminho, String extensao) {
