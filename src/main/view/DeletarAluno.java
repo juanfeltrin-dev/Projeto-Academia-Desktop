@@ -44,15 +44,19 @@ public class DeletarAluno extends JPanel {
 
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int idAluno = Integer.parseInt(comboBox.getSelectedItem().toString().replaceAll("\\D+",""));
-				
 				try {
-					String msg = alunoController.excluir(idAluno);
+					int res = JOptionPane.showConfirmDialog(null, "Desejar deletar este aluno?");
+					
+					if (res == 0) {
+						int idAluno = Integer.parseInt(comboBox.getSelectedItem().toString().replaceAll("\\D+",""));
+						String msg 	= alunoController.excluir(idAluno);
 
-					JOptionPane.showMessageDialog(null, msg);
+						JOptionPane.showMessageDialog(null, msg);
+					}
 				} catch (Exception exception) {
 					JOptionPane.showMessageDialog(null, exception.getMessage());
 				}
+				
 			}
 		});
 	}

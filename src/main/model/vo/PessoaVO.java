@@ -50,7 +50,7 @@ public class PessoaVO {
 	}
 	
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = nome.toUpperCase();
 	}
 	
 	public String getCpf() {
@@ -98,7 +98,7 @@ public class PessoaVO {
 	}
 	
 	public void setEmail(String email) {
-		this.email = email;
+		this.email = email.toUpperCase();
 	}
 	
 	public String getBairro() {
@@ -106,7 +106,7 @@ public class PessoaVO {
 	}
 	
 	public void setBairro(String bairro) {
-		this.bairro = bairro;
+		this.bairro = bairro.toUpperCase();
 	}
 	
 	public String getCidade() {
@@ -114,7 +114,7 @@ public class PessoaVO {
 	}
 	
 	public void setCidade(String cidade) {
-		this.cidade = cidade;
+		this.cidade = cidade.toUpperCase();
 	}
 	
 	public String getEstado() {

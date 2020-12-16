@@ -62,7 +62,7 @@ public class CadastroModalidade extends JPanel {
 		textField.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Cadastrar Modalidade");
-		btnNewButton.setBounds(129, 198, 138, 23);
+		btnNewButton.setBounds(100, 198, 198, 23);
 		add(btnNewButton);
 		
 		btnNewButton.addActionListener(new ActionListener() {

@@ -24,6 +24,7 @@ public class DeletarModalidade extends JPanel {
 	public DeletarModalidade() {
 		try {
 			setLayout(null);
+			final JPanel contentPane = this;
 			
 			JLabel lblNewLabel = new JLabel("Modalidade:");
 			lblNewLabel.setBounds(112, 115, 73, 14);
@@ -38,11 +39,16 @@ public class DeletarModalidade extends JPanel {
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
-						int modalidadeId = Integer.parseInt(cbxModalidade.getSelectedItem().toString().replaceAll("\\D+",""));
+						int res = JOptionPane.showConfirmDialog(null, "Desejar deletar esta modalidade?");
 						
-						String msg = modalidadeController.excluir(modalidadeId);
-						
-						JOptionPane.showMessageDialog(null, msg);
+						if (res == 0) {
+							int modalidadeId 	= Integer.parseInt(cbxModalidade.getSelectedItem().toString().replaceAll("\\D+",""));							
+							String msg 			= modalidadeController.excluir(modalidadeId);
+							
+							JOptionPane.showMessageDialog(null, msg);
+
+							contentPane.revalidate();
+						}
 					} catch (Exception exception) {
 						JOptionPane.showMessageDialog(null, exception.getMessage());
 					}

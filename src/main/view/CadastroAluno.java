@@ -72,133 +72,133 @@ public class CadastroAluno extends JPanel {
 			setLayout(null);
 			
 			JLabel lblNewLabel = new JLabel("Email:");
-			lblNewLabel.setBounds(10, 59, 83, 22);
+			lblNewLabel.setBounds(10, 62, 104, 25);
 			add(lblNewLabel);
 			
 			txtEmail = new JTextField();
-			txtEmail.setBounds(113, 61, 280, 18);
+			txtEmail.setBounds(113, 62, 239, 25);
 			add(txtEmail);
 			txtEmail.setColumns(10);
 			
 			JLabel lblNewLabel_1 = new JLabel("CPF:");
-			lblNewLabel_1.setBounds(10, 92, 46, 14);
+			lblNewLabel_1.setBounds(10, 93, 104, 25);
 			add(lblNewLabel_1);
 			
 			DatePickerSettings dateSettings = new DatePickerSettings();
 			dateSettings.setAllowKeyboardEditing(false);
 			
 			final DateTimePicker txtNascimento = new DateTimePicker(dateSettings, null);
-			txtNascimento.setBounds(451, 116, 180, 40);
+			txtNascimento.setBounds(492, 62, 180, 25);
 			add(txtNascimento);
 			
 			JLabel lblNewLabel_2 = new JLabel("Data de Nascimento:");
-			lblNewLabel_2.setBounds(312, 116, 129, 14);
+			lblNewLabel_2.setBounds(362, 62, 129, 25);
 			add(lblNewLabel_2);
 			
 			MaskFormatter mascaraCpf = new MaskFormatter("###.###.###-##");  //mascara de cpf
 			final JFormattedTextField txtCpf = new JFormattedTextField(mascaraCpf);
-			txtCpf.setBounds(113, 90, 67, 18);
+			txtCpf.setBounds(113, 93, 239, 25);
 			add(txtCpf);
 			txtCpf.setColumns(10);
 			
 			JLabel lblNewLabel_3 = new JLabel("Telefone:");
-			lblNewLabel_3.setBounds(10, 128, 67, 14);
+			lblNewLabel_3.setBounds(10, 129, 67, 25);
 			add(lblNewLabel_3);
 			
 			JLabel lblNewLabel_4 = new JLabel("Celular:");
-			lblNewLabel_4.setBounds(10, 153, 67, 14);
+			lblNewLabel_4.setBounds(10, 165, 67, 25);
 			add(lblNewLabel_4);
 			
 			MaskFormatter mascaraTelefone = new MaskFormatter("(##)####-####");//mascara TELEFONE 
 			final JFormattedTextField txtTelefone = new JFormattedTextField(mascaraTelefone);
-			txtTelefone.setBounds(113, 122, 99, 18);
+			txtTelefone.setBounds(113, 129, 239, 25);
 			add(txtTelefone);
 			txtTelefone.setColumns(10);
 				
 			MaskFormatter mascaraCelular = new MaskFormatter("(##)#####-####");//mascara celular 
 			final JFormattedTextField txtCelular = new JFormattedTextField(mascaraCelular);
-			txtCelular.setBounds(113, 151, 99, 18);
+			txtCelular.setBounds(113, 165, 239, 25);
 			add(txtCelular);
 			txtCelular.setColumns(10);
 			
 			JLabel lblNewLabel_5 = new JLabel("CEP:");
-			lblNewLabel_5.setBounds(10, 182, 46, 14);
+			lblNewLabel_5.setBounds(10, 201, 104, 25);
 			add(lblNewLabel_5);
 			
 			MaskFormatter mascaraCep = new MaskFormatter("#####-###");//mascara CEP 
 			final JFormattedTextField txtCep = new JFormattedTextField(mascaraCep);
-			txtCep.setBounds(113, 180, 99, 18);
+			txtCep.setBounds(113, 201, 239, 25);
 			add(txtCep);
 			txtCep.setColumns(10);
 			
 			JLabel lblNewLabel_6 = new JLabel("Endere\u00E7o:");
-			lblNewLabel_6.setBounds(7, 211, 70, 14);
+			lblNewLabel_6.setBounds(10, 309, 104, 25);
 			add(lblNewLabel_6);
 			
 			txtEndereco = new JTextField();
-			txtEndereco.setBounds(113, 209, 189, 18);
+			txtEndereco.setBounds(113, 309, 239, 25);
 			add(txtEndereco);
 			txtEndereco.setColumns(10);
 			
 			JLabel lblNewLabel_7 = new JLabel("Bairro:");
-			lblNewLabel_7.setBounds(10, 240, 67, 14);
+			lblNewLabel_7.setBounds(10, 345, 67, 25);
 			add(lblNewLabel_7);
 			
 			txtBairro = new JTextField();
-			txtBairro.setBounds(113, 238, 189, 18);
+			txtBairro.setBounds(113, 345, 239, 25);
 			add(txtBairro);
 			txtBairro.setColumns(10);
 			
 			JLabel lblNewLabel_8 = new JLabel("Cidade:");
-			lblNewLabel_8.setBounds(10, 269, 67, 14);
+			lblNewLabel_8.setBounds(10, 273, 104, 25);
 			add(lblNewLabel_8);
 			
 			txtCidade = new JTextField();
-			txtCidade.setBounds(113, 267, 189, 18);
+			txtCidade.setBounds(113, 273, 239, 25);
 			add(txtCidade);
 			txtCidade.setColumns(10);
 			
 			JLabel lblNewLabel_9 = new JLabel("UF:");
-			lblNewLabel_9.setBounds(10, 298, 46, 14);
+			lblNewLabel_9.setBounds(10, 237, 104, 25);
 			add(lblNewLabel_9);
 			
 			JLabel lblNewLabel_10 = new JLabel("Observac\u00F5es:");
-			lblNewLabel_10.setBounds(10, 325, 83, 14);
+			lblNewLabel_10.setBounds(10, 408, 104, 25);
 			add(lblNewLabel_10);
 			
 			final JTextPane txtObservacoes = new JTextPane();
 			txtObservacoes.setBorder(new LineBorder(Color.LIGHT_GRAY));
-			txtObservacoes.setBounds(113, 325, 195, 105);
+			txtObservacoes.setBounds(113, 408, 585, 105);
 			add(txtObservacoes);
 	
 			ArrayList<String> estados = this.mockEstados();
 			final JComboBox cbEstado = new JComboBox(estados.toArray());
-			cbEstado.setBounds(113, 296, 99, 18);
+			cbEstado.setBounds(113, 237, 239, 25);
 			add(cbEstado);
 			
 			JLabel lblNewLabel_11 = new JLabel("Sexo:");
-			lblNewLabel_11.setBounds(312, 90, 46, 14);
+			lblNewLabel_11.setBounds(362, 26, 129, 25);
 			add(lblNewLabel_11);
 			
 			final JRadioButton btnMasculino = new JRadioButton("Masculino");
-			btnMasculino.setBounds(451, 83, 94, 23);
+			btnMasculino.setBounds(492, 26, 94, 25);
 			add(btnMasculino);
 			
 			JRadioButton btnFeminino = new JRadioButton("Feminino");
-			btnFeminino.setBounds(547, 83, 84, 23);
+			btnFeminino.setBounds(588, 26, 84, 25);
 			add(btnFeminino);
 			
 			JLabel lblNewLabel_12 = new JLabel("Turma:");
-			lblNewLabel_12.setBounds(337, 211, 83, 14);
+			lblNewLabel_12.setBounds(362, 98, 129, 25);
 			add(lblNewLabel_12);
 	
 			ArrayList<TurmaVO> turmas = this.alunoController.turmas();
 			final JComboBox cbTurma = new JComboBox(turmas.toArray());
-			cbTurma.setBounds(451, 209, 109, 18);
+			cbTurma.setBounds(492, 98, 206, 25);
 			add(cbTurma);
 			
 			JButton btnNewButton = new JButton("Limpar");
-			btnNewButton.setBounds(276, 482, 89, 23);
+			btnNewButton.setBounds(274, 524, 89, 23);
 			add(btnNewButton);
 			
 			JButton btnNewButton_1 = new JButton("Cadastrar");
@@ -232,16 +232,16 @@ public class CadastroAluno extends JPanel {
 					}
 				}
 			});
-			btnNewButton_1.setBounds(423, 482, 104, 23);
+			btnNewButton_1.setBounds(423, 524, 104, 23);
 			add(btnNewButton_1);
 			
 			JLabel lblNewLabel_13 = new JLabel("Nome completo:");
-			lblNewLabel_13.setBounds(10, 26, 83, 22);
+			lblNewLabel_13.setBounds(10, 26, 104, 25);
 			add(lblNewLabel_13);
 			
 			txtNome = new JTextField();
 			txtNome.setColumns(10);
-			txtNome.setBounds(113, 27, 280, 18);
+			txtNome.setBounds(113, 26, 239, 25);
 			add(txtNome);
 		} catch (ParseException e) {
 			e.printStackTrace();

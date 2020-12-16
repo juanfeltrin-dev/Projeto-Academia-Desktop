@@ -66,12 +66,12 @@ public class CadastroTurma extends JPanel {
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Nome da turma:");
-		lblNewLabel.setBounds(23, 32, 79, 14);
+		JLabel lblNewLabel = new JLabel("Nome da turma*:");
+		lblNewLabel.setBounds(10, 29, 104, 25);
 		add(lblNewLabel);
 		
 		textField = new JTextField();
-		textField.setBounds(112, 29, 163, 20);
+		textField.setBounds(112, 29, 406, 25);
 		add(textField);
 		textField.setColumns(10);
 		
@@ -80,7 +80,7 @@ public class CadastroTurma extends JPanel {
 		
 		
 		final TimePicker time = new TimePicker(timeSettings);
-		time.setBounds(23, 75, 119, 29);
+		time.setBounds(112, 101, 406, 25);
 		add(time);
 		
 		JButton btnNewButton = new JButton("Cadastrar Turma");
@@ -88,33 +88,41 @@ public class CadastroTurma extends JPanel {
 		add(btnNewButton);
 		
 		final JCheckBox chckbxNewCheckBox = new JCheckBox("Segunda - Feira");
-		chckbxNewCheckBox.setBounds(23, 121, 119, 23);
+		chckbxNewCheckBox.setBounds(113, 137, 119, 25);
 		add(chckbxNewCheckBox);
 		
 		final JCheckBox chckbxNewCheckBox_1 = new JCheckBox("Ter\u00E7a - Feira");
-		chckbxNewCheckBox_1.setBounds(22, 147, 97, 23);
+		chckbxNewCheckBox_1.setBounds(112, 163, 97, 25);
 		add(chckbxNewCheckBox_1);
 		
 		final JCheckBox chckbxNewCheckBox_2 = new JCheckBox("Quarta - Feira");
-		chckbxNewCheckBox_2.setBounds(23, 173, 97, 23);
+		chckbxNewCheckBox_2.setBounds(113, 189, 97, 25);
 		add(chckbxNewCheckBox_2);
 		
 		final JCheckBox chckbxNewCheckBox_3 = new JCheckBox("Quinta - Feira");
-		chckbxNewCheckBox_3.setBounds(23, 199, 97, 23);
+		chckbxNewCheckBox_3.setBounds(113, 215, 97, 25);
 		add(chckbxNewCheckBox_3);
 		
 		final JCheckBox chckbxNewCheckBox_4 = new JCheckBox("Sexta - Feira");
-		chckbxNewCheckBox_4.setBounds(23, 225, 97, 23);
+		chckbxNewCheckBox_4.setBounds(113, 241, 97, 25);
 		add(chckbxNewCheckBox_4);		
 		
-		JLabel lblModalidade = new JLabel("Modalidade:");
-		lblModalidade.setBounds(285, 32, 79, 14);
+		JLabel lblModalidade = new JLabel("Modalidade*:");
+		lblModalidade.setBounds(10, 65, 79, 25);
 		add(lblModalidade);
 		
 		ArrayList<ModalidadeVO> modalidades = this.modalidadeController.consultarNomeModalidade();
 		JComboBox comboBox = new JComboBox(modalidades.toArray());
-		comboBox.setBounds(353, 29, 144, 20);
+		comboBox.setBounds(112, 65, 406, 25);
 		add(comboBox);
+		
+		JLabel lblNewLabel_1 = new JLabel("Hora*:");
+		lblNewLabel_1.setBounds(10, 101, 104, 25);
+		add(lblNewLabel_1);
+		
+		JLabel lblDiasDaSemana = new JLabel("Dias da semana*:");
+		lblDiasDaSemana.setBounds(10, 137, 104, 25);
+		add(lblDiasDaSemana);
 
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -43,67 +43,71 @@ public class AlterarInstrutor extends JPanel {
 			add(cpf);
 			
 			JLabel lblEmail = new JLabel("Email:");
-			lblEmail.setBounds(10, 65, 76, 14);
+			lblEmail.setBounds(10, 127, 76, 14);
 			add(lblEmail);
 			
 			txtEmail = new JTextField();
-			txtEmail.setBounds(124, 62, 203, 20);
+			txtEmail.setBounds(124, 124, 203, 20);
 			add(txtEmail);
 			txtEmail.setColumns(10);
 			
 			JLabel lblTelefone = new JLabel("Telefone:");
-			lblTelefone.setBounds(10, 96, 76, 14);
+			lblTelefone.setBounds(10, 158, 76, 14);
 			add(lblTelefone);
 
 			MaskFormatter mascaraTelefone = new MaskFormatter("(##)####-####");//mascara TELEFONE 
 			final JFormattedTextField txtTelefone = new JFormattedTextField(mascaraTelefone);
-			txtTelefone.setBounds(124, 93, 203, 20);
+			txtTelefone.setBounds(124, 155, 203, 20);
 			add(txtTelefone);
 			
 			JLabel lblCelular = new JLabel("Celular:");
-			lblCelular.setBounds(10, 127, 76, 14);
+			lblCelular.setBounds(10, 192, 76, 14);
 			add(lblCelular);
 			
 			JLabel lblCep = new JLabel("CEP:");
-			lblCep.setBounds(10, 158, 76, 14);
+			lblCep.setBounds(10, 223, 76, 14);
 			add(lblCep);
 
 			MaskFormatter mascaraCelular = new MaskFormatter("(##)#####-####");//mascara celular 
 			final JFormattedTextField txtCelular = new JFormattedTextField(mascaraCelular);
-			txtCelular.setBounds(124, 124, 203, 20);
+			txtCelular.setBounds(124, 189, 203, 20);
 			add(txtCelular);
 
 			MaskFormatter mascaraCep = new MaskFormatter("#####-###");//mascara CEP 
 			final JFormattedTextField txtCep = new JFormattedTextField(mascaraCep);
-			txtCep.setBounds(124, 155, 203, 20);
+			txtCep.setBounds(124, 220, 203, 20);
 			add(txtCep);
 			
 			JLabel lblBairro = new JLabel("Bairro:");
-			lblBairro.setBounds(10, 189, 76, 14);
+			lblBairro.setBounds(10, 252, 76, 14);
 			add(lblBairro);
 			
 			JLabel lblCidade = new JLabel("Cidade:");
-			lblCidade.setBounds(10, 223, 76, 14);
+			lblCidade.setBounds(10, 283, 76, 14);
 			add(lblCidade);
 			
 			JLabel lblUf = new JLabel("UF:");
-			lblUf.setBounds(10, 248, 76, 14);
+			lblUf.setBounds(10, 314, 76, 14);
 			add(lblUf);
 			
 			txtBairro = new JTextField();
-			txtBairro.setBounds(124, 186, 203, 20);
+			txtBairro.setBounds(124, 249, 203, 20);
 			add(txtBairro);
 			txtBairro.setColumns(10);
 			
 			txtCidade = new JTextField();
-			txtCidade.setBounds(124, 217, 203, 20);
+			txtCidade.setBounds(124, 280, 203, 20);
 			add(txtCidade);
 			txtCidade.setColumns(10);
 
 			ArrayList<String> estados = this.mockEstados();
 			final JComboBox cbUf = new JComboBox(estados.toArray());
-			cbUf.setBounds(124, 245, 203, 20);
+			cbUf.setBounds(124, 311, 203, 20);
 			add(cbUf);
+			
+			final JLabel nome = new JLabel("");
+			nome.setBounds(10, 78, 317, 14);
+			add(nome);
 			
 			JButton btnBuscar = new JButton("Buscar");
 			btnBuscar.addActionListener(new ActionListener() {
@@ -111,6 +115,7 @@ public class AlterarInstrutor extends JPanel {
 					try {
 						instrutor = instrutorController.buscarPeloCpf(cpf.getText());
 
+						nome.setText(instrutor.getNome());
 						txtEmail.setText(instrutor.getEmail());
 						txtTelefone.setText(instrutor.getTelefone());
 						txtCelular.setText(instrutor.getCelular());
@@ -127,8 +132,9 @@ public class AlterarInstrutor extends JPanel {
 			add(btnBuscar);
 			
 			JButton btnAlterar = new JButton("Alterar");
-			btnAlterar.setBounds(238, 270, 89, 23);
+			btnAlterar.setBounds(238, 342, 89, 23);
 			add(btnAlterar);
+			
 			btnAlterar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					try {

@@ -68,7 +68,7 @@ public class InstrutorDAO {
 	}
 	
 	public InstrutorVO buscarPeloCpf(String cpf) throws Exception {
-		String sql 					= "SELECT pessoas.email, pessoas.telefone, pessoas.celular, pessoas.cep, pessoas.bairro, pessoas.cidade, pessoas.estado, pessoas.id_pessoa "
+		String sql 					= "SELECT pessoas.email, pessoas.telefone, pessoas.celular, pessoas.cep, pessoas.bairro, pessoas.cidade, pessoas.estado, pessoas.id_pessoa, pessoas.nome "
 									+ "FROM pessoas "
 									+ "INNER JOIN instrutores ON pessoas.id_pessoa = instrutores.id_pessoa "
 									+ "WHERE pessoas.cpf = ?";
@@ -91,6 +91,7 @@ public class InstrutorDAO {
 				instrutor.setCidade(resultado.getString(6));
 				instrutor.setEstado(resultado.getString(7));
 				instrutor.setPessoaId(resultado.getInt(8));
+				instrutor.setNome(resultado.getString(9));
 			}
 		} catch (SQLException exception) {
 			System.out.println("Erro ao executar a query que busca pessoa pelo CPF.\n");

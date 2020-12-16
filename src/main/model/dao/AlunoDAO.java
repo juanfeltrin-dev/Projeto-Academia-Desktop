@@ -340,7 +340,7 @@ public class AlunoDAO {
 	}
 	
 	public AlunoVO buscarPeloCpf(String cpf) throws Exception {
-		String sql 					= "SELECT pessoas.email, pessoas.telefone, pessoas.celular, pessoas.cep, pessoas.bairro, pessoas.cidade, pessoas.estado, pessoas.id_pessoa "
+		String sql 					= "SELECT pessoas.email, pessoas.telefone, pessoas.celular, pessoas.cep, pessoas.bairro, pessoas.cidade, pessoas.estado, pessoas.id_pessoa, pessoas.nome "
 									+ "FROM pessoas "
 									+ "INNER JOIN alunos ON pessoas.id_pessoa = alunos.id_pessoa "
 									+ "WHERE pessoas.cpf = ?";
@@ -363,6 +363,7 @@ public class AlunoDAO {
 				aluno.setCidade(resultado.getString(6));
 				aluno.setEstado(resultado.getString(7));
 				aluno.setPessoaId(resultado.getInt(8));
+				aluno.setNome(resultado.getString(9));
 			}
 		} catch (SQLException exception) {
 			System.out.println("Erro ao executar a query que buscar aluno pelo CPF.\n");

@@ -1,6 +1,6 @@
 package controller;
 import model.vo.AlunoVO;
-import model.vo.ModalidadeVO;
+import org.apache.commons.validator.routines.EmailValidator;
 import model.vo.TurmaVO;
 
 import java.util.ArrayList;
@@ -28,16 +28,20 @@ public class AlunoController extends PessoaController{
 
 	private static void validarCampos(AlunoVO aluno) throws Exception {
 		try {
-			if (aluno.getNome().isEmpty() && (aluno.getNome().length() > 100 || aluno.getNome().length() < 3)) {
+			if (aluno.getNome().isEmpty() || (aluno.getNome().length() > 100 || aluno.getNome().length() < 3)) {
 				throw new Exception("Nome não pode ser vazio e deve conter entre 3 e 100 caracteres");
 			}
 
-			if (aluno.getEmail().isEmpty() && (aluno.getEmail().length() > 100 || aluno.getEmail().length() < 3)) {
+			if (aluno.getEmail().isEmpty() || (aluno.getEmail().length() > 100 || aluno.getEmail().length() < 3)) {
 				throw new Exception("Email não pode ser vazio e deve conter entre 3 e 100 caracteres");
 			}
 
-			if (aluno.getCpf().isEmpty() && aluno.getNome().length() != 14) {
-				throw new Exception("CPF deve conter 11 digitoss");
+			if (!EmailValidator.getInstance().isValid(aluno.getEmail())) {
+				throw new Exception("Email inválido");
+			}
+
+			if (aluno.getCpf().length() != 14) {
+				throw new Exception("CPF deve conter 11 digitos");
 			}
 
 			if (aluno.getNascimento().toString().isEmpty()) {
@@ -48,19 +52,19 @@ public class AlunoController extends PessoaController{
 				throw new Exception("Sexo deve ser M/F");
 			}
 
-			if (aluno.getBairro().isEmpty() && (aluno.getBairro().length() > 100 || aluno.getBairro().length() < 3)) {
+			if (aluno.getBairro().isEmpty() || (aluno.getBairro().length() > 100 || aluno.getBairro().length() < 3)) {
 				throw new Exception("Bairro não pode ser vazio e deve conter entre 3 e 100 caracteres");
 			}
 
-			if (aluno.getCidade().isEmpty() && (aluno.getCidade().length() > 100 || aluno.getCidade().length() < 3)) {
+			if (aluno.getCidade().isEmpty() || (aluno.getCidade().length() > 100 || aluno.getCidade().length() < 3)) {
 				throw new Exception("Cidade não pode ser vazio e deve conter entre 3 e 100 caracteres");
 			}
 
-			if (aluno.getEstado().isEmpty() && aluno.getEstado().length() == 2) {
+			if (aluno.getEstado().isEmpty() || aluno.getEstado().length() != 2) {
 				throw new Exception("Estado deve conter 2 digitos");
 			}
 
-			if (aluno.getCep().isEmpty() && aluno.getCep().length() != 10) {
+			if (aluno.getCep().isEmpty() || aluno.getCep().length() != 10) {
 				throw new Exception("CEP deve conter 8 digitos");
 			}
 		} catch (Exception exception) {

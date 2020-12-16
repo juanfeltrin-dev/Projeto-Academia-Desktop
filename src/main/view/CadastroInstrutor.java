@@ -74,125 +74,125 @@ public class CadastroInstrutor extends JPanel {
 			setLayout(null);
 			
 			JLabel lblNewLabel = new JLabel("Nome completo:");
-			lblNewLabel.setBounds(10, 11, 83, 22);
+			lblNewLabel.setBounds(10, 11, 109, 25);
 			add(lblNewLabel);
 			
 			txtNome = new JTextField();
-			txtNome.setBounds(122, 15, 255, 14);
+			txtNome.setBounds(122, 15, 255, 25);
 			add(txtNome);
 			txtNome.setColumns(10);
 			
 			JLabel lblNewLabel_1 = new JLabel("CPF:");
-			lblNewLabel_1.setBounds(10, 106, 24, 14);
+			lblNewLabel_1.setBounds(10, 123, 109, 25);
 			add(lblNewLabel_1);
 			
 			MaskFormatter mascaraCpf = new MaskFormatter("###.###.###-##");  //mascara de cpf
 			final JFormattedTextField txtCpf = new JFormattedTextField(mascaraCpf);
-			txtCpf.setBounds(122, 106, 99, 14);
+			txtCpf.setBounds(122, 123, 255, 25);
 			add(txtCpf);
 			txtCpf.setColumns(10);
 	
 			JLabel lblNewLabel_3 = new JLabel("Telefone:");
-			lblNewLabel_3.setBounds(10, 131, 46, 14);
+			lblNewLabel_3.setBounds(10, 159, 109, 25);
 			add(lblNewLabel_3);
 			
 			JLabel lblNewLabel_4 = new JLabel("Celular:");
-			lblNewLabel_4.setBounds(10, 163, 46, 14);
+			lblNewLabel_4.setBounds(10, 195, 109, 25);
 			add(lblNewLabel_4);
 	
 			MaskFormatter mascaraTelefone = new MaskFormatter("(##)####-####");//mascara TELEFONE 
 			final JFormattedTextField txtTelefone = new JFormattedTextField(mascaraTelefone);
-			txtTelefone.setBounds(122, 131, 99, 14);
+			txtTelefone.setBounds(122, 159, 255, 25);
 			add(txtTelefone);
 			txtTelefone.setColumns(10);
 		
 			MaskFormatter mascaraCelular = new MaskFormatter("(##)#####-####");//mascara celular 
 			final JFormattedTextField txtCelular = new JFormattedTextField(mascaraCelular);
-			txtCelular.setBounds(122, 163, 99, 14);
+			txtCelular.setBounds(122, 195, 255, 25);
 			add(txtCelular);
 			txtCelular.setColumns(10);
 		
 		
 			JLabel lblNewLabel_5 = new JLabel("CEP:");
-			lblNewLabel_5.setBounds(10, 190, 46, 14);
+			lblNewLabel_5.setBounds(10, 231, 109, 25);
 			add(lblNewLabel_5);
 			
 			MaskFormatter mascaraCep = new MaskFormatter("#####-###");//mascara CEP 
 			final JFormattedTextField txtCep = new JFormattedTextField(mascaraCep);
-			txtCep.setBounds(122, 188, 99, 14);
+			txtCep.setBounds(122, 231, 255, 25);
 			add(txtCep);
 			txtCep.setColumns(10);
 		
-			JLabel lblData = new JLabel("Data:");
-			lblData.setBounds(10, 64, 40, 20);
+			JLabel lblData = new JLabel("Data admiss\u00E3o:");
+			lblData.setBounds(10, 87, 109, 25);
 			add(lblData);
 	
 			DatePickerSettings dateSettings = new DatePickerSettings();
 			dateSettings.setAllowKeyboardEditing(false);
 			
 			final DatePicker admissao = new DatePicker(dateSettings);
-			admissao.setBounds(122, 65, 180, 19);
+			admissao.setBounds(122, 87, 180, 25);
 			add(admissao);
 		
 			JLabel lblNewLabel_6 = new JLabel("Endere\u00E7o:");
-			lblNewLabel_6.setBounds(10, 215, 49, 14);
+			lblNewLabel_6.setBounds(10, 339, 112, 25);
 			add(lblNewLabel_6);
 			
 			txtEndereco = new JTextField();
-			txtEndereco.setBounds(122, 213, 99, 14);
+			txtEndereco.setBounds(122, 339, 255, 25);
 			add(txtEndereco);
 			txtEndereco.setColumns(10);
 			
 			JLabel lblNewLabel_7 = new JLabel("Bairro:");
-			lblNewLabel_7.setBounds(10, 244, 46, 14);
+			lblNewLabel_7.setBounds(10, 375, 109, 25);
 			add(lblNewLabel_7);
 			
 			txtBairro = new JTextField();
-			txtBairro.setBounds(122, 244, 99, 14);
+			txtBairro.setBounds(122, 375, 255, 25);
 			add(txtBairro);
 			txtBairro.setColumns(10);
 			
 			JLabel lblNewLabel_8 = new JLabel("Cidade:");
-			lblNewLabel_8.setBounds(10, 269, 46, 14);
+			lblNewLabel_8.setBounds(10, 303, 109, 25);
 			add(lblNewLabel_8);
 			
 			txtCidade = new JTextField();
-			txtCidade.setBounds(122, 269, 99, 14);
+			txtCidade.setBounds(122, 303, 255, 25);
 			add(txtCidade);
 			txtCidade.setColumns(10);
 			
 			JLabel lblNewLabel_9 = new JLabel("UF:");
-			lblNewLabel_9.setBounds(10, 294, 24, 14);
+			lblNewLabel_9.setBounds(10, 267, 109, 25);
 			add(lblNewLabel_9);
 
 			ArrayList<String> estados = this.mockEstados();
 			final JComboBox cbxUf = new JComboBox(estados.toArray());
-			cbxUf.setBounds(122, 294, 67, 22);
+			cbxUf.setBounds(122, 267, 255, 25);
 			add(cbxUf);
 			
 			JLabel lblNewLabel_11 = new JLabel("Sexo:");
-			lblNewLabel_11.setBounds(331, 81, 46, 14);
+			lblNewLabel_11.setBounds(397, 11, 89, 25);
 			add(lblNewLabel_11);
 			
 			final JRadioButton btnMasculino = new JRadioButton("Masculino");
-			btnMasculino.setBounds(331, 102, 77, 23);
+			btnMasculino.setBounds(486, 11, 77, 25);
 			add(btnMasculino);
 			
 			JRadioButton btnFeminino = new JRadioButton("Feminino");
-			btnFeminino.setBounds(410, 102, 109, 23);
+			btnFeminino.setBounds(605, 11, 109, 25);
 			add(btnFeminino);
 			
 			JLabel lblNewLabel_12 = new JLabel("Salario:");
-			lblNewLabel_12.setBounds(330, 146, 36, 14);
+			lblNewLabel_12.setBounds(397, 47, 89, 25);
 			add(lblNewLabel_12);
 		
 			final JNumberFormatField txtSalario = new JNumberFormatField();
-			txtSalario.setBounds(376, 146, 67, 14);
+			txtSalario.setBounds(486, 83, 228, 25);
 			add(txtSalario);
 			txtSalario.setColumns(10);
 			
 			final DatePicker nascimento = new DatePicker();
-			nascimento.setBounds(331, 213, 180, 20);
+			nascimento.setBounds(486, 47, 180, 25);
 			add(nascimento);
 			
 			JButton btnNewButton = new JButton("Limpar");
@@ -235,16 +235,16 @@ public class CadastroInstrutor extends JPanel {
 			add(btnNewButton_1);
 			
 			txtEmail = new JTextField();
-			txtEmail.setBounds(122, 38, 255, 16);
+			txtEmail.setBounds(122, 51, 255, 25);
 			add(txtEmail);
 			txtEmail.setColumns(10);
 			
 			JLabel lblNewLabel_2 = new JLabel("Email:");
-			lblNewLabel_2.setBounds(10, 39, 46, 14);
+			lblNewLabel_2.setBounds(10, 51, 109, 25);
 			add(lblNewLabel_2);
 			
 			JLabel lblNascimento = new JLabel("Nascimento:");
-			lblNascimento.setBounds(331, 190, 112, 14);
+			lblNascimento.setBounds(397, 83, 89, 25);
 			add(lblNascimento);
 		} catch (ParseException e) {
 			e.printStackTrace();

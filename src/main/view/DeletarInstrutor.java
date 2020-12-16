@@ -41,11 +41,14 @@ public class DeletarInstrutor extends JPanel {
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-
-					int idInstrutor = Integer.parseInt(comboBox.getSelectedItem().toString().replaceAll("\\D+",""));
-					String msg = instrutorController.excluir(idInstrutor);
+					int res = JOptionPane.showConfirmDialog(null, "Desejar deletar este instrutor?");
 					
-					JOptionPane.showMessageDialog(null, msg);
+					if (res == 0) {
+						int idInstrutor = Integer.parseInt(comboBox.getSelectedItem().toString().replaceAll("\\D+",""));
+						String msg 		= instrutorController.excluir(idInstrutor);
+						
+						JOptionPane.showMessageDialog(null, msg);
+					}
 				} catch (Exception exception) {
 					JOptionPane.showMessageDialog(null, exception.getMessage());
 				}

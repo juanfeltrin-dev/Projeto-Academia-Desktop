@@ -37,7 +37,7 @@ public class GerarPlanilha {
 		int linhaAtual = 0;
 
 		// Criar o cabeçalho (header)
-		String[] nomesColunas = { "ID", "Nome", "CPF" };
+		String[] nomesColunas = { "ID", "Nome", "CPF", "Cidade", "Bairro" };
 		criarCabecalho(nomesColunas, aba, linhaAtual);
 
 		// Preencher as linhas com os produtos
@@ -56,6 +56,8 @@ public class GerarPlanilha {
 			linhaAtual.createCell(0).setCellValue(aluno.getId());
 			linhaAtual.createCell(1).setCellValue(aluno.getNome());
 			linhaAtual.createCell(2).setCellValue(aluno.getCpf());
+			linhaAtual.createCell(3).setCellValue(aluno.getCidade());
+			linhaAtual.createCell(4).setCellValue(aluno.getBairro());
 		
 
 			// Converter para Date

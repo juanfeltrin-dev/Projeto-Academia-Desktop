@@ -31,7 +31,7 @@ public class ModalidadeVO {
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = nome.toUpperCase();
 	}
 
 	public List<TurmaVO> getTurmas() {
